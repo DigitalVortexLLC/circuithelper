@@ -138,8 +138,9 @@ jobs:
         REDIS_HOST: localhost
         REDIS_PORT: 6379
       run: |
-        # Run plugin tests from the NetBox directory
-        python manage.py test circuithelper.tests --keepdb
+        # Run plugin tests using pytest
+        # The plugin is installed via pip install -e, so we can import it
+        pytest -v --ds=netbox.settings -m "not slow" ../../circuithelper/circuithelper/tests/
 
     # Coverage reporting with Django's test runner would require additional setup
     # For now, we're focusing on passing tests

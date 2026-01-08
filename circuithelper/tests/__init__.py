@@ -1,1 +1,1 @@
-# Tests for NetBox Circuit Manager
+"""Tests for CircuitHelper NetBox plugin."""
