@@ -1,0 +1,19 @@
+[flake8]
+max-line-length = 100
+extend-ignore = E501
+# Allow variables prefixed with underscore to be unused (common convention)
+per-file-ignores =
+    **/tests/*.py:F841
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    build,
+    dist,
+    *.egg-info,
+    migrations,
+    .tox,
+    .pytest_cache
+count = True
+statistics = True

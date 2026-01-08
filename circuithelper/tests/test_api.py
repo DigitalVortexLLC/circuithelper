@@ -6,6 +6,7 @@ import pytest
 from decimal import Decimal
 from datetime import date
 from rest_framework import status
+from circuits.models import Circuit
 
 from circuithelper.models import (
     CircuitCost,

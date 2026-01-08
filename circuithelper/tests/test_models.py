@@ -3,12 +3,11 @@ Tests for NetBox Circuit Manager models.
 """
 
 import pytest
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from circuits.models import Circuit, Provider
 from circuithelper.models import (
     CircuitCost,
     CircuitContract,
@@ -119,13 +118,13 @@ class TestCircuitContract:
 
     def test_multiple_contracts_per_circuit(self, circuit):
         """Test that a circuit can have multiple contracts."""
-        contract1 = CircuitContract.objects.create(
+        _contract1 = CircuitContract.objects.create(
             circuit=circuit,
             contract_number='CONTRACT-2024-001',
             start_date=date(2024, 1, 1),
             end_date=date(2025, 12, 31)
         )
-        contract2 = CircuitContract.objects.create(
+        _contract2 = CircuitContract.objects.create(
             circuit=circuit,
             contract_number='CONTRACT-2026-001',
             start_date=date(2026, 1, 1),
@@ -378,12 +377,12 @@ class TestProviderAPIConfig:
 
     def test_multiple_provider_types_per_provider(self, provider):
         """Test that a provider can have multiple API configs for different types."""
-        config1 = ProviderAPIConfig.objects.create(
+        _config1 = ProviderAPIConfig.objects.create(
             provider=provider,
             provider_type='lumen',
             api_endpoint='https://api1.lumen.com'
         )
-        config2 = ProviderAPIConfig.objects.create(
+        _config2 = ProviderAPIConfig.objects.create(
             provider=provider,
             provider_type='custom',
             api_endpoint='https://api2.custom.com'

@@ -2,11 +2,8 @@
 Tests for NetBox Circuit Manager utility functions.
 """
 
-import pytest
-import json
 from io import BytesIO
 from zipfile import ZipFile
-from decimal import Decimal
 
 from circuithelper.utils import (
     parse_kmz_file,

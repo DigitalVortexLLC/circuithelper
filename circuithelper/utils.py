@@ -1,12 +1,9 @@
-import json
 import zipfile
 from io import BytesIO
 from typing import Dict, Optional, Tuple
 
 from fastkml import kml
-from lxml import etree
 from shapely.geometry import shape, mapping
-from shapely.ops import linemerge
 
 
 def parse_kmz_file(kmz_file) -> Tuple[Optional[Dict], Optional[Tuple[float, float]]]:
@@ -55,7 +52,6 @@ def parse_kml_data(kml_data: bytes) -> Tuple[Optional[Dict], Optional[Tuple[floa
     """
     try:
         # Parse KML
-        root = etree.fromstring(kml_data)
         k = kml.KML()
         k.from_string(kml_data)
 

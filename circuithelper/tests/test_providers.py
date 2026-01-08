@@ -3,11 +3,9 @@ Tests for provider API integration framework.
 """
 
 import pytest
-from unittest.mock import Mock, patch, MagicMock
-from datetime import datetime
+from unittest.mock import Mock, patch
 from decimal import Decimal
 
-from circuits.models import Circuit
 from circuithelper.models import ProviderAPIConfig, CircuitCost
 from circuithelper.providers.base import BaseProviderSync
 from circuithelper.providers.registry import ProviderRegistry

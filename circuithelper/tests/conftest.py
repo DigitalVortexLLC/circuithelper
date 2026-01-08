@@ -4,7 +4,7 @@ Pytest configuration and fixtures for NetBox Circuit Manager tests.
 
 import pytest
 from django.contrib.auth import get_user_model
-from circuits.models import Provider, ProviderAccount, CircuitType, Circuit
+from circuits.models import Provider, CircuitType, Circuit
 from tenancy.models import Tenant
 
 

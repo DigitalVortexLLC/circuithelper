@@ -4,9 +4,7 @@ Tests for management commands.
 
 import pytest
 from io import StringIO
-from unittest.mock import Mock, patch
 from django.core.management import call_command
-from django.core.management.base import CommandError
 
 from circuithelper.models import ProviderAPIConfig
 from circuithelper.providers.registry import provider_registry
@@ -100,7 +98,7 @@ class TestSyncProviderCommand:
 
     def test_command_sync_all_providers(self, provider):
         """Test syncing all enabled providers."""
-        config1 = ProviderAPIConfig.objects.create(
+        _config1 = ProviderAPIConfig.objects.create(
             provider=provider,
             provider_type='test_provider',
             api_endpoint='https://api.test1.com',
@@ -114,7 +112,7 @@ class TestSyncProviderCommand:
             slug='provider-2'
         )
 
-        config2 = ProviderAPIConfig.objects.create(
+        _config2 = ProviderAPIConfig.objects.create(
             provider=provider2,
             provider_type='test_provider',
             api_endpoint='https://api.test2.com',
@@ -130,7 +128,7 @@ class TestSyncProviderCommand:
 
     def test_command_disabled_provider_skipped(self, provider):
         """Test that disabled providers are skipped."""
-        config = ProviderAPIConfig.objects.create(
+        _config = ProviderAPIConfig.objects.create(
             provider=provider,
             provider_type='test_provider',
             api_endpoint='https://api.test.com',
@@ -145,7 +143,7 @@ class TestSyncProviderCommand:
 
     def test_command_nonexistent_provider_type(self, provider):
         """Test command with provider type not in registry."""
-        config = ProviderAPIConfig.objects.create(
+        _config = ProviderAPIConfig.objects.create(
             provider=provider,
             provider_type='nonexistent',
             api_endpoint='https://api.test.com',
@@ -182,7 +180,7 @@ class TestSyncProviderCommand:
 
         provider_registry.register('failing_provider', FailingMockProviderSync)
 
-        config = ProviderAPIConfig.objects.create(
+        _config = ProviderAPIConfig.objects.create(
             provider=provider,
             provider_type='failing_provider',
             api_endpoint='https://api.test.com',

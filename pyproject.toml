@@ -30,7 +30,6 @@ classifiers = [
 ]
 
 dependencies = [
-    "netbox>=4.5.0",
     "fastkml>=1.0.0",
     "lxml>=4.9.0",
     "shapely>=2.0.0",
