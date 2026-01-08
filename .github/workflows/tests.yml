@@ -84,36 +84,37 @@ jobs:
         sed -i "s/'USER': ''/'USER': 'netbox'/g" configuration.py || true
         sed -i "s/'PASSWORD': ''/'PASSWORD': 'netbox'/g" configuration.py || true
 
-        # Configure Redis without password (GitHub Actions Redis has no auth)
-        cat >> configuration.py << EOF
-
-# Redis configuration for GitHub Actions (no password)
-REDIS = {
-    "tasks": {
-        "HOST": "localhost",
-        "PORT": 6379,
-        "PASSWORD": "",
-        "DATABASE": 0,
-        "SSL": False,
-    },
-    "caching": {
-        "HOST": "localhost",
-        "PORT": 6379,
-        "PASSWORD": "",
-        "DATABASE": 1,
-        "SSL": False,
-    }
-}
-
-# Plugin configuration
-PLUGINS = ["circuithelper"]
-PLUGINS_CONFIG = {
-    "circuithelper": {
-        "default_currency": "USD",
-        "enable_provider_sync": True,
-    }
-}
-EOF
+        # Add Redis and plugin configuration
+        python << 'PYSCRIPT'
+with open('configuration.py', 'a') as f:
+    f.write('\n')
+    f.write('# Redis configuration for GitHub Actions\n')
+    f.write('REDIS = {\n')
+    f.write('    "tasks": {\n')
+    f.write('        "HOST": "localhost",\n')
+    f.write('        "PORT": 6379,\n')
+    f.write('        "PASSWORD": "",\n')
+    f.write('        "DATABASE": 0,\n')
+    f.write('        "SSL": False,\n')
+    f.write('    },\n')
+    f.write('    "caching": {\n')
+    f.write('        "HOST": "localhost",\n')
+    f.write('        "PORT": 6379,\n')
+    f.write('        "PASSWORD": "",\n')
+    f.write('        "DATABASE": 1,\n')
+    f.write('        "SSL": False,\n')
+    f.write('    }\n')
+    f.write('}\n')
+    f.write('\n')
+    f.write('# Plugin configuration\n')
+    f.write('PLUGINS = ["circuithelper"]\n')
+    f.write('PLUGINS_CONFIG = {\n')
+    f.write('    "circuithelper": {\n')
+    f.write('        "default_currency": "USD",\n')
+    f.write('        "enable_provider_sync": True,\n')
+    f.write('    }\n')
+    f.write('}\n')
+PYSCRIPT
 
     - name: Run NetBox migrations
       working-directory: netbox/netbox
