@@ -82,15 +82,36 @@ jobs:
         sed -i "s/'HOST': 'localhost'/'HOST': '$DB_HOST'/g" configuration.py || true
         sed -i "s/'USER': ''/'USER': '$DB_USER'/g" configuration.py || true
         sed -i "s/'PASSWORD': ''/'PASSWORD': '$DB_PASSWORD'/g" configuration.py || true
-        # Add plugin to configuration
-        echo "" >> configuration.py
-        echo "PLUGINS = ['circuithelper']" >> configuration.py
-        echo "PLUGINS_CONFIG = {" >> configuration.py
-        echo "    'circuithelper': {" >> configuration.py
-        echo "        'default_currency': 'USD'," >> configuration.py
-        echo "        'enable_provider_sync': True," >> configuration.py
-        echo "    }" >> configuration.py
-        echo "}" >> configuration.py
+        # Configure Redis without password (GitHub Actions Redis has no auth)
+        cat >> configuration.py << 'EOF'
+
+# Redis configuration for GitHub Actions
+REDIS = {
+    'tasks': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'PASSWORD': '',
+        'DATABASE': 0,
+        'SSL': False,
+    },
+    'caching': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'PASSWORD': '',
+        'DATABASE': 1,
+        'SSL': False,
+    }
+}
+
+# Add plugin to configuration
+PLUGINS = ['circuithelper']
+PLUGINS_CONFIG = {
+    'circuithelper': {
+        'default_currency': 'USD',
+        'enable_provider_sync': True,
+    }
+}
+EOF
       env:
         DB_HOST: localhost
         DB_USER: netbox
