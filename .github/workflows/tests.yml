@@ -1,0 +1,164 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12', '3.13', '3.14']
+        netbox-version: ['4.5.0']
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: netbox
+          POSTGRES_USER: netbox
+          POSTGRES_PASSWORD: netbox
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache pip packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install NetBox ${{ matrix.netbox-version }}
+      run: |
+        pip install netbox==${{ matrix.netbox-version }}
+
+    - name: Install plugin dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-django pytest-cov
+
+    - name: Install plugin
+      run: |
+        pip install -e .
+
+    - name: Run linting
+      run: |
+        pip install flake8 black
+        flake8 netbox_circuit_manager --count --select=E9,F63,F7,F82 --show-source --statistics
+        black --check netbox_circuit_manager
+
+    - name: Run tests with coverage
+      env:
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DB_NAME: netbox
+        DB_USER: netbox
+        DB_PASSWORD: netbox
+        REDIS_HOST: localhost
+        REDIS_PORT: 6379
+      run: |
+        pytest --cov=netbox_circuit_manager --cov-report=xml --cov-report=html --cov-report=term
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+    - name: Archive coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report-py${{ matrix.python-version }}
+        path: htmlcov/
+
+    - name: Check coverage threshold
+      run: |
+        coverage report --fail-under=70
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install linting tools
+      run: |
+        pip install flake8 black isort
+
+    - name: Run flake8
+      run: |
+        flake8 netbox_circuit_manager --count --statistics --max-line-length=100
+
+    - name: Run black
+      run: |
+        black --check --diff netbox_circuit_manager
+
+    - name: Run isort
+      run: |
+        isort --check-only --diff netbox_circuit_manager
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install safety bandit
+
+    - name: Run safety check
+      run: |
+        safety check --json || true
+
+    - name: Run bandit security check
+      run: |
+        bandit -r netbox_circuit_manager -f json -o bandit-report.json || true
+
+    - name: Upload security reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json

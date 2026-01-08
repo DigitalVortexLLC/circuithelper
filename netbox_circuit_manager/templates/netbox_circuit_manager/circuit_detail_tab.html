@@ -1,0 +1,199 @@
+{% extends 'base/layout.html' %}
+{% load static %}
+
+{% block title %}{{ circuit }} - Circuit Details{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>{{ circuit }}</h2>
+    </div>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#costs">Costs</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#contracts">Contracts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#tickets">Tickets</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#map">Circuit Path</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <!-- Costs Tab -->
+    <div id="costs" class="tab-pane fade show active">
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Cost Information</strong>
+                {% if costs %}
+                    <a href="{% url 'plugins:netbox_circuit_manager:circuitcost_edit' pk=costs.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
+                {% else %}
+                    <a href="{% url 'plugins:netbox_circuit_manager:circuitcost_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Costs</a>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if costs %}
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Non-Recurring Charge (NRC)</th>
+                            <td>{{ costs.nrc|default:"—" }} {{ costs.currency }}</td>
+                        </tr>
+                        <tr>
+                            <th>Monthly Recurring Charge (MRC)</th>
+                            <td>{{ costs.mrc|default:"—" }} {{ costs.currency }}</td>
+                        </tr>
+                        <tr>
+                            <th>Currency</th>
+                            <td>{{ costs.currency }}</td>
+                        </tr>
+                        <tr>
+                            <th>Billing Account</th>
+                            <td>{{ costs.billing_account|default:"—" }}</td>
+                        </tr>
+                        <tr>
+                            <th>Last Updated</th>
+                            <td>{{ costs.last_updated_date|default:"—" }}</td>
+                        </tr>
+                    </table>
+                {% else %}
+                    <p class="text-muted">No cost information available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Contracts Tab -->
+    <div id="contracts" class="tab-pane fade">
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Contracts</strong>
+                <a href="{% url 'plugins:netbox_circuit_manager:circuitcontract_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Contract</a>
+            </div>
+            <div class="card-body">
+                {% if contracts %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Contract Number</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Term</th>
+                                <th>Auto-Renew</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contract in contracts %}
+                            <tr>
+                                <td><a href="{% url 'plugins:netbox_circuit_manager:circuitcontract' pk=contract.pk %}">{{ contract.contract_number }}</a></td>
+                                <td>{{ contract.start_date }}</td>
+                                <td>{{ contract.end_date|default:"—" }}</td>
+                                <td>{{ contract.term_months|default:"—" }} months</td>
+                                <td>{% if contract.auto_renew %}Yes{% else %}No{% endif %}</td>
+                                <td>
+                                    <a href="{% url 'plugins:netbox_circuit_manager:circuitcontract_edit' pk=contract.pk %}" class="btn btn-xs btn-warning">Edit</a>
+                                    {% if contract.contract_file %}
+                                        <a href="{{ contract.contract_file.url }}" class="btn btn-xs btn-info" target="_blank">View File</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted">No contracts available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Tickets Tab -->
+    <div id="tickets" class="tab-pane fade">
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Support Tickets</strong>
+                <a href="{% url 'plugins:netbox_circuit_manager:circuitticket_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Ticket</a>
+            </div>
+            <div class="card-body">
+                {% if tickets %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ticket Number</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Opened</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in tickets %}
+                            <tr>
+                                <td><a href="{% url 'plugins:netbox_circuit_manager:circuitticket' pk=ticket.pk %}">{{ ticket.ticket_number }}</a></td>
+                                <td>{{ ticket.subject }}</td>
+                                <td><span class="badge badge-{{ ticket.status }}">{{ ticket.get_status_display }}</span></td>
+                                <td><span class="badge badge-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span></td>
+                                <td>{{ ticket.opened_date|date:"Y-m-d H:i" }}</td>
+                                <td>
+                                    <a href="{% url 'plugins:netbox_circuit_manager:circuitticket_edit' pk=ticket.pk %}" class="btn btn-xs btn-warning">Edit</a>
+                                    {% if ticket.external_url %}
+                                        <a href="{{ ticket.external_url }}" class="btn btn-xs btn-info" target="_blank">External Link</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted">No tickets available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Tab -->
+    <div id="map" class="tab-pane fade">
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Circuit Path Map</strong>
+                {% if path %}
+                    <a href="{% url 'plugins:netbox_circuit_manager:circuitpath_edit' pk=path.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
+                {% else %}
+                    <a href="{% url 'plugins:netbox_circuit_manager:circuitpath_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Path</a>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if path and map_html %}
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Path Distance:</strong> {{ path.path_distance_km|default:"—" }} km
+                        </div>
+                        <div class="col-md-6">
+                            {% if path.kmz_file %}
+                                <a href="{{ path.kmz_file.url }}" class="btn btn-sm btn-info float-right">Download KMZ</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if path.path_notes %}
+                        <div class="alert alert-info">
+                            {{ path.path_notes }}
+                        </div>
+                    {% endif %}
+                    <div class="map-container" style="height: 600px;">
+                        {{ map_html|safe }}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No circuit path information available. Upload a KMZ file to visualize the circuit route.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
