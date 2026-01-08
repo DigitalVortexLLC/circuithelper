@@ -79,42 +79,41 @@ jobs:
         cd netbox/netbox/netbox
         cp configuration_testing.py configuration.py
 
-        # Update database settings for GitHub Actions
+        # Update database settings
         sed -i "s/'HOST': 'localhost'/'HOST': 'localhost'/g" configuration.py || true
         sed -i "s/'USER': ''/'USER': 'netbox'/g" configuration.py || true
         sed -i "s/'PASSWORD': ''/'PASSWORD': 'netbox'/g" configuration.py || true
 
-        # Add Redis and plugin configuration
-        python << 'PYSCRIPT'
-with open('configuration.py', 'a') as f:
-    f.write('\n')
-    f.write('# Redis configuration for GitHub Actions\n')
-    f.write('REDIS = {\n')
-    f.write('    "tasks": {\n')
-    f.write('        "HOST": "localhost",\n')
-    f.write('        "PORT": 6379,\n')
-    f.write('        "PASSWORD": "",\n')
-    f.write('        "DATABASE": 0,\n')
-    f.write('        "SSL": False,\n')
-    f.write('    },\n')
-    f.write('    "caching": {\n')
-    f.write('        "HOST": "localhost",\n')
-    f.write('        "PORT": 6379,\n')
-    f.write('        "PASSWORD": "",\n')
-    f.write('        "DATABASE": 1,\n')
-    f.write('        "SSL": False,\n')
-    f.write('    }\n')
-    f.write('}\n')
-    f.write('\n')
-    f.write('# Plugin configuration\n')
-    f.write('PLUGINS = ["circuithelper"]\n')
-    f.write('PLUGINS_CONFIG = {\n')
-    f.write('    "circuithelper": {\n')
-    f.write('        "default_currency": "USD",\n')
-    f.write('        "enable_provider_sync": True,\n')
-    f.write('    }\n')
-    f.write('}\n')
-PYSCRIPT
+        # Add Redis configuration
+        echo "" >> configuration.py
+        echo "# Redis configuration for GitHub Actions" >> configuration.py
+        echo "REDIS = {" >> configuration.py
+        echo "    'tasks': {" >> configuration.py
+        echo "        'HOST': 'localhost'," >> configuration.py
+        echo "        'PORT': 6379," >> configuration.py
+        echo "        'PASSWORD': ''," >> configuration.py
+        echo "        'DATABASE': 0," >> configuration.py
+        echo "        'SSL': False," >> configuration.py
+        echo "    }," >> configuration.py
+        echo "    'caching': {" >> configuration.py
+        echo "        'HOST': 'localhost'," >> configuration.py
+        echo "        'PORT': 6379," >> configuration.py
+        echo "        'PASSWORD': ''," >> configuration.py
+        echo "        'DATABASE': 1," >> configuration.py
+        echo "        'SSL': False," >> configuration.py
+        echo "    }" >> configuration.py
+        echo "}" >> configuration.py
+
+        # Add plugin configuration
+        echo "" >> configuration.py
+        echo "# Plugin configuration" >> configuration.py
+        echo "PLUGINS = ['circuithelper']" >> configuration.py
+        echo "PLUGINS_CONFIG = {" >> configuration.py
+        echo "    'circuithelper': {" >> configuration.py
+        echo "        'default_currency': 'USD'," >> configuration.py
+        echo "        'enable_provider_sync': True," >> configuration.py
+        echo "    }" >> configuration.py
+        echo "}" >> configuration.py
 
     - name: Run NetBox migrations
       working-directory: netbox/netbox
