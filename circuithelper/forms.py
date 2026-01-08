@@ -19,7 +19,6 @@ class CircuitCostForm(NetBoxModelForm):
             "billing_account",
             "last_updated_date",
             "tags",
-            "comments",
         ]
 
 
@@ -40,7 +39,6 @@ class CircuitContractForm(NetBoxModelForm):
             "contract_file",
             "notes",
             "tags",
-            "comments",
         ]
         widgets = {
             "start_date": forms.DateInput(attrs={"type": "date"}),
@@ -64,7 +62,6 @@ class CircuitTicketForm(NetBoxModelForm):
             "resolution",
             "external_url",
             "tags",
-            "comments",
         ]
         widgets = {
             "closed_date": forms.DateTimeInput(attrs={"type": "datetime-local"}),
@@ -87,7 +84,6 @@ class CircuitPathForm(NetBoxModelForm):
             "path_distance_km",
             "path_notes",
             "tags",
-            "comments",
         ]
         widgets = {
             "path_notes": forms.Textarea(attrs={"rows": 3}),
@@ -109,7 +105,6 @@ class ProviderAPIConfigForm(NetBoxModelForm):
             "sync_enabled",
             "sync_interval_hours",
             "tags",
-            "comments",
         ]
         widgets = {
             "api_secret": forms.PasswordInput(render_value=True),
