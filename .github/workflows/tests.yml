@@ -78,44 +78,42 @@ jobs:
       run: |
         cd netbox/netbox/netbox
         cp configuration_testing.py configuration.py
-        # Update database settings for GitHub Actions
-        sed -i "s/'HOST': 'localhost'/'HOST': '$DB_HOST'/g" configuration.py || true
-        sed -i "s/'USER': ''/'USER': '$DB_USER'/g" configuration.py || true
-        sed -i "s/'PASSWORD': ''/'PASSWORD': '$DB_PASSWORD'/g" configuration.py || true
-        # Configure Redis without password (GitHub Actions Redis has no auth)
-        cat >> configuration.py << 'EOF'
 
-# Redis configuration for GitHub Actions
+        # Update database settings for GitHub Actions
+        sed -i "s/'HOST': 'localhost'/'HOST': 'localhost'/g" configuration.py || true
+        sed -i "s/'USER': ''/'USER': 'netbox'/g" configuration.py || true
+        sed -i "s/'PASSWORD': ''/'PASSWORD': 'netbox'/g" configuration.py || true
+
+        # Configure Redis without password (GitHub Actions Redis has no auth)
+        cat >> configuration.py << EOF
+
+# Redis configuration for GitHub Actions (no password)
 REDIS = {
-    'tasks': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'PASSWORD': '',
-        'DATABASE': 0,
-        'SSL': False,
+    "tasks": {
+        "HOST": "localhost",
+        "PORT": 6379,
+        "PASSWORD": "",
+        "DATABASE": 0,
+        "SSL": False,
     },
-    'caching': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'PASSWORD': '',
-        'DATABASE': 1,
-        'SSL': False,
+    "caching": {
+        "HOST": "localhost",
+        "PORT": 6379,
+        "PASSWORD": "",
+        "DATABASE": 1,
+        "SSL": False,
     }
 }
 
-# Add plugin to configuration
-PLUGINS = ['circuithelper']
+# Plugin configuration
+PLUGINS = ["circuithelper"]
 PLUGINS_CONFIG = {
-    'circuithelper': {
-        'default_currency': 'USD',
-        'enable_provider_sync': True,
+    "circuithelper": {
+        "default_currency": "USD",
+        "enable_provider_sync": True,
     }
 }
 EOF
-      env:
-        DB_HOST: localhost
-        DB_USER: netbox
-        DB_PASSWORD: netbox
 
     - name: Run NetBox migrations
       working-directory: netbox/netbox
