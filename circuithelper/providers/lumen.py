@@ -5,12 +5,13 @@ This is a sample implementation showing how to integrate with a carrier API.
 Actual API endpoints and authentication methods will vary by provider.
 """
 
-from typing import Dict, List
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+from typing import Dict, List
+
+from ..models import CircuitCost
 from .base import BaseProviderSync
 from .registry import provider_registry
-from ..models import CircuitCost
 
 
 class LumenProviderSync(BaseProviderSync):

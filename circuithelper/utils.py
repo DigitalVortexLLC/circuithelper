@@ -3,7 +3,7 @@ from io import BytesIO
 from typing import Dict, Optional, Tuple
 
 from fastkml import kml
-from shapely.geometry import shape, mapping
+from shapely.geometry import mapping, shape
 
 
 def parse_kmz_file(kmz_file) -> Tuple[Optional[Dict], Optional[Tuple[float, float]]]:
@@ -137,8 +137,8 @@ def calculate_path_distance(geojson_data: Dict) -> Optional[float]:
         Distance in kilometers, or None if calculation fails
     """
     try:
-        from shapely.ops import transform
         import pyproj
+        from shapely.ops import transform
 
         total_distance = 0
 

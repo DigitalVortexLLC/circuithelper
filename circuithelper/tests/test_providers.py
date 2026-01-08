@@ -2,14 +2,15 @@
 Tests for provider API integration framework.
 """
 
-import pytest
-from unittest.mock import Mock, patch
 from decimal import Decimal
+from unittest.mock import Mock, patch
 
-from circuithelper.models import ProviderAPIConfig, CircuitCost
+import pytest
+
+from circuithelper.models import CircuitCost, ProviderAPIConfig
 from circuithelper.providers.base import BaseProviderSync
-from circuithelper.providers.registry import ProviderRegistry
 from circuithelper.providers.lumen import LumenProviderSync
+from circuithelper.providers.registry import ProviderRegistry
 
 
 class MockProviderSync(BaseProviderSync):

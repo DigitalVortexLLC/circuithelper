@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
 from datetime import datetime
+from typing import Dict, List, Optional
+
 import requests
 from circuits.models import Circuit
 

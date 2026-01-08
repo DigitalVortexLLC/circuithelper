@@ -1,4 +1,4 @@
-from netbox.plugins import PluginMenuButton, PluginMenuItem, PluginMenu
+from netbox.plugins import PluginMenu, PluginMenuButton, PluginMenuItem
 
 menu = PluginMenu(
     label="Circuit Manager",

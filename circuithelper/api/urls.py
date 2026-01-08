@@ -1,9 +1,10 @@
 from netbox.api.routers import NetBoxRouter
+
 from .views import (
-    CircuitCostViewSet,
     CircuitContractViewSet,
-    CircuitTicketViewSet,
+    CircuitCostViewSet,
     CircuitPathViewSet,
+    CircuitTicketViewSet,
     ProviderAPIConfigViewSet,
 )
 

@@ -1,8 +1,8 @@
+from circuits.models import Circuit
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse
 from netbox.models import NetBoxModel
-from circuits.models import Circuit
 
 
 class CircuitCost(NetBoxModel):

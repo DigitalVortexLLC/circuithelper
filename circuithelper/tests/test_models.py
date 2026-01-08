@@ -2,17 +2,18 @@
 Tests for NetBox Circuit Manager models.
 """
 
-import pytest
 from datetime import date, datetime
 from decimal import Decimal
+
+import pytest
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from circuithelper.models import (
-    CircuitCost,
     CircuitContract,
-    CircuitTicket,
+    CircuitCost,
     CircuitPath,
+    CircuitTicket,
     ProviderAPIConfig,
 )
 

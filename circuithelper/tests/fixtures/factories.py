@@ -4,8 +4,8 @@ Factory classes for creating test data.
 These factories use factory_boy pattern for easier test data creation.
 """
 
-from decimal import Decimal
 from datetime import date, timedelta
+from decimal import Decimal
 
 
 class CircuitCostFactory:
@@ -127,8 +127,9 @@ class CircuitFactory:
     @staticmethod
     def create(provider, circuit_type, **kwargs):
         """Create a Circuit instance."""
-        from circuits.models import Circuit
         import random
+
+        from circuits.models import Circuit
 
         defaults = {"cid": f"TEST-CIRCUIT-{random.randint(1000, 9999)}", "status": "active"}
         defaults.update(kwargs)
@@ -142,8 +143,9 @@ class ProviderFactory:
     @staticmethod
     def create(**kwargs):
         """Create a Provider instance."""
-        from circuits.models import Provider
         import random
+
+        from circuits.models import Provider
 
         defaults = {
             "name": f"Test Provider {random.randint(1, 999)}",
@@ -160,8 +162,9 @@ class CircuitTypeFactory:
     @staticmethod
     def create(**kwargs):
         """Create a CircuitType instance."""
-        from circuits.models import CircuitType
         import random
+
+        from circuits.models import CircuitType
 
         defaults = {
             "name": f"Circuit Type {random.randint(1, 999)}",

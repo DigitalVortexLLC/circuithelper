@@ -2,16 +2,17 @@
 Tests for NetBox Circuit Manager forms.
 """
 
-import pytest
-from decimal import Decimal
 from datetime import date
+from decimal import Decimal
+
+import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from circuithelper.forms import (
-    CircuitCostForm,
     CircuitContractForm,
-    CircuitTicketForm,
+    CircuitCostForm,
     CircuitPathForm,
+    CircuitTicketForm,
     ProviderAPIConfigForm,
 )
 

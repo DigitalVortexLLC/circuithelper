@@ -1,15 +1,16 @@
+from circuits.models import Circuit
 from django.shortcuts import get_object_or_404, render
 from netbox.views import generic
-from circuits.models import Circuit
-from .models import CircuitCost, CircuitContract, CircuitTicket, CircuitPath, ProviderAPIConfig
+
 from .forms import (
-    CircuitCostForm,
     CircuitContractForm,
-    CircuitTicketForm,
+    CircuitCostForm,
     CircuitPathForm,
+    CircuitTicketForm,
     ProviderAPIConfigForm,
 )
-from .utils import parse_kmz_file, calculate_path_distance, generate_folium_map
+from .models import CircuitContract, CircuitCost, CircuitPath, CircuitTicket, ProviderAPIConfig
+from .utils import calculate_path_distance, generate_folium_map, parse_kmz_file
 
 
 # CircuitCost Views

@@ -1,8 +1,9 @@
+from circuits.models import Circuit
 from django import forms
 from netbox.forms import NetBoxModelForm
 from utilities.forms.fields import DynamicModelChoiceField
-from circuits.models import Circuit
-from .models import CircuitCost, CircuitContract, CircuitTicket, CircuitPath, ProviderAPIConfig
+
+from .models import CircuitContract, CircuitCost, CircuitPath, CircuitTicket, ProviderAPIConfig
 
 
 class CircuitCostForm(NetBoxModelForm):

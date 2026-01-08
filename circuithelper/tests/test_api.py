@@ -2,17 +2,18 @@
 Tests for NetBox Circuit Manager REST API.
 """
 
-import pytest
-from decimal import Decimal
 from datetime import date
-from rest_framework import status
+from decimal import Decimal
+
+import pytest
 from circuits.models import Circuit
+from rest_framework import status
 
 from circuithelper.models import (
-    CircuitCost,
     CircuitContract,
-    CircuitTicket,
+    CircuitCost,
     CircuitPath,
+    CircuitTicket,
     ProviderAPIConfig,
 )
 

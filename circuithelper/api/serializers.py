@@ -1,7 +1,8 @@
-from rest_framework import serializers
-from netbox.api.serializers import NetBoxModelSerializer
 from circuits.api.serializers import CircuitSerializer
-from ..models import CircuitCost, CircuitContract, CircuitTicket, CircuitPath, ProviderAPIConfig
+from netbox.api.serializers import NetBoxModelSerializer
+from rest_framework import serializers
+
+from ..models import CircuitContract, CircuitCost, CircuitPath, CircuitTicket, ProviderAPIConfig
 
 
 class CircuitCostSerializer(NetBoxModelSerializer):
