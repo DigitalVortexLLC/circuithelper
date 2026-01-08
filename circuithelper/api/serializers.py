@@ -9,7 +9,7 @@ from ..models import (
 
 class CircuitCostSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_circuit_manager-api:circuitcost-detail'
+        view_name='plugins-api:circuithelper-api:circuitcost-detail'
     )
     circuit = CircuitSerializer(nested=True)
 
@@ -24,7 +24,7 @@ class CircuitCostSerializer(NetBoxModelSerializer):
 
 class CircuitContractSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_circuit_manager-api:circuitcontract-detail'
+        view_name='plugins-api:circuithelper-api:circuitcontract-detail'
     )
     circuit = CircuitSerializer(nested=True)
 
@@ -41,7 +41,7 @@ class CircuitContractSerializer(NetBoxModelSerializer):
 
 class CircuitTicketSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_circuit_manager-api:circuitticket-detail'
+        view_name='plugins-api:circuithelper-api:circuitticket-detail'
     )
     circuit = CircuitSerializer(nested=True)
 
@@ -58,7 +58,7 @@ class CircuitTicketSerializer(NetBoxModelSerializer):
 
 class CircuitPathSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_circuit_manager-api:circuitpath-detail'
+        view_name='plugins-api:circuithelper-api:circuitpath-detail'
     )
     circuit = CircuitSerializer(nested=True)
 
@@ -74,7 +74,7 @@ class CircuitPathSerializer(NetBoxModelSerializer):
 
 class ProviderAPIConfigSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_circuit_manager-api:providerapiconfig-detail'
+        view_name='plugins-api:circuithelper-api:providerapiconfig-detail'
     )
 
     class Meta:

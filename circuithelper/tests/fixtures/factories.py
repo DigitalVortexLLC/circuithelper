@@ -14,7 +14,7 @@ class CircuitCostFactory:
     @staticmethod
     def create(circuit, **kwargs):
         """Create a CircuitCost instance."""
-        from netbox_circuit_manager.models import CircuitCost
+        from circuithelper.models import CircuitCost
 
         defaults = {
             'nrc': Decimal('500.00'),
@@ -33,7 +33,7 @@ class CircuitContractFactory:
     @staticmethod
     def create(circuit, **kwargs):
         """Create a CircuitContract instance."""
-        from netbox_circuit_manager.models import CircuitContract
+        from circuithelper.models import CircuitContract
 
         defaults = {
             'contract_number': 'CONTRACT-2024-001',
@@ -54,7 +54,7 @@ class CircuitTicketFactory:
     @staticmethod
     def create(circuit, **kwargs):
         """Create a CircuitTicket instance."""
-        from netbox_circuit_manager.models import CircuitTicket
+        from circuithelper.models import CircuitTicket
 
         defaults = {
             'ticket_number': 'TKT-123456',
@@ -74,7 +74,7 @@ class CircuitPathFactory:
     @staticmethod
     def create(circuit, **kwargs):
         """Create a CircuitPath instance."""
-        from netbox_circuit_manager.models import CircuitPath
+        from circuithelper.models import CircuitPath
 
         defaults = {
             'map_center_lat': Decimal('37.7749'),
@@ -107,7 +107,7 @@ class ProviderAPIConfigFactory:
     @staticmethod
     def create(provider, **kwargs):
         """Create a ProviderAPIConfig instance."""
-        from netbox_circuit_manager.models import ProviderAPIConfig
+        from circuithelper.models import ProviderAPIConfig
 
         defaults = {
             'provider_type': 'lumen',

@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "netbox-circuit-manager"
+name = "circuithelper"
 version = "0.1.0"
 description = "Advanced circuit management plugin for NetBox"
 readme = "README.md"
@@ -74,7 +74,7 @@ python_files = "test_*.py"
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["netbox_circuit_manager"]
+source = ["circuithelper"]
 omit = [
     "*/migrations/*",
     "*/tests/*",

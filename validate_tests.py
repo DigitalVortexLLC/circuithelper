@@ -45,7 +45,7 @@ def count_test_methods(filepath):
 
 def main():
     """Main validation function."""
-    test_dir = Path('netbox_circuit_manager/tests')
+    test_dir = Path('circuithelper/tests')
 
     if not test_dir.exists():
         print(f"❌ Test directory not found: {test_dir}")

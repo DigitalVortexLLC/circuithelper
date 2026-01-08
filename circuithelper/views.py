@@ -187,4 +187,4 @@ def circuit_detail_tab(request, pk):
         'map_html': map_html,
     }
 
-    return render(request, 'netbox_circuit_manager/circuit_detail_tab.html', context)
+    return render(request, 'circuithelper/circuit_detail_tab.html', context)

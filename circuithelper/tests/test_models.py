@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from circuits.models import Circuit, Provider
-from netbox_circuit_manager.models import (
+from circuithelper.models import (
     CircuitCost,
     CircuitContract,
     CircuitTicket,

@@ -21,18 +21,18 @@ A comprehensive NetBox plugin that extends the built-in circuit management funct
 1. Install the plugin from PyPI:
 
 ```bash
-pip install netbox-circuit-manager
+pip install circuithelper
 ```
 
 2. Add the plugin to your `configuration.py`:
 
 ```python
 PLUGINS = [
-    'netbox_circuit_manager',
+    'circuithelper',
 ]
 
 PLUGINS_CONFIG = {
-    'netbox_circuit_manager': {
+    'circuithelper': {
         'default_currency': 'USD',
         'enable_provider_sync': True,
     }
@@ -43,7 +43,7 @@ PLUGINS_CONFIG = {
 
 ```bash
 cd /opt/netbox/netbox/
-python3 manage.py migrate netbox_circuit_manager
+python3 manage.py migrate circuithelper
 ```
 
 4. Restart NetBox:

@@ -5,7 +5,7 @@ Get up and running with NetBox Circuit Manager in 5 minutes.
 ## Installation
 
 ```bash
-pip install netbox-circuit-manager
+pip install circuithelper
 ```
 
 ## Configuration
@@ -13,10 +13,10 @@ pip install netbox-circuit-manager
 Add to your NetBox `configuration.py`:
 
 ```python
-PLUGINS = ['netbox_circuit_manager']
+PLUGINS = ['circuithelper']
 
 PLUGINS_CONFIG = {
-    'netbox_circuit_manager': {
+    'circuithelper': {
         'default_currency': 'USD',
     }
 }
@@ -26,7 +26,7 @@ PLUGINS_CONFIG = {
 
 ```bash
 cd /opt/netbox/netbox
-python3 manage.py migrate netbox_circuit_manager
+python3 manage.py migrate circuithelper
 python3 manage.py collectstatic --no-input
 sudo systemctl restart netbox netbox-rq
 ```
@@ -196,7 +196,7 @@ sudo -u netbox crontab -e
 
 ## Getting Help
 
-- Check [GitHub Issues](https://github.com/yourusername/netbox-circuit-manager/issues)
+- Check [GitHub Issues](https://github.com/yourusername/circuithelper/issues)
 - Review [NetBox Documentation](https://netboxlabs.com/docs/)
 - Join [NetBox Community Slack](https://netdev.chat/)
 

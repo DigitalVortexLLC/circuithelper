@@ -28,30 +28,30 @@ tests/
 pytest
 
 # Using Django's test runner
-python manage.py test netbox_circuit_manager
+python manage.py test circuithelper
 ```
 
 ### Specific Test Files
 
 ```bash
 # Test models only
-pytest netbox_circuit_manager/tests/test_models.py
+pytest circuithelper/tests/test_models.py
 
 # Test API only
-pytest netbox_circuit_manager/tests/test_api.py
+pytest circuithelper/tests/test_api.py
 
 # Test a specific test class
-pytest netbox_circuit_manager/tests/test_models.py::TestCircuitCost
+pytest circuithelper/tests/test_models.py::TestCircuitCost
 
 # Test a specific test method
-pytest netbox_circuit_manager/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
+pytest circuithelper/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
 ```
 
 ### With Coverage
 
 ```bash
 # Generate coverage report
-pytest --cov=netbox_circuit_manager --cov-report=html
+pytest --cov=circuithelper --cov-report=html
 
 # View coverage report
 open htmlcov/index.html
@@ -187,7 +187,7 @@ Factory classes for creating test data:
 
 ```python
 # Example usage
-from netbox_circuit_manager.tests.fixtures.factories import (
+from circuithelper.tests.fixtures.factories import (
     CircuitCostFactory,
     CircuitContractFactory,
     CircuitTicketFactory,
@@ -207,7 +207,7 @@ ticket = CircuitTicketFactory.create(circuit=circuit, priority='critical')
 
 ```python
 import pytest
-from netbox_circuit_manager.models import YourModel
+from circuithelper.models import YourModel
 
 
 @pytest.mark.django_db
@@ -269,7 +269,7 @@ Tests should run in CI/CD pipeline:
 # Example GitHub Actions workflow
 - name: Run tests
   run: |
-    pytest --cov=netbox_circuit_manager --cov-report=xml
+    pytest --cov=circuithelper --cov-report=xml
 
 - name: Upload coverage
   uses: codecov/codecov-action@v3

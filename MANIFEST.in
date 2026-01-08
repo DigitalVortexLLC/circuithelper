@@ -1,4 +1,4 @@
 include README.md
 include LICENSE
-recursive-include netbox_circuit_manager/templates *
-recursive-include netbox_circuit_manager/static *
+recursive-include circuithelper/templates *
+recursive-include circuithelper/static *

@@ -7,7 +7,7 @@ from decimal import Decimal
 from datetime import date
 from rest_framework import status
 
-from netbox_circuit_manager.models import (
+from circuithelper.models import (
     CircuitCost,
     CircuitContract,
     CircuitTicket,

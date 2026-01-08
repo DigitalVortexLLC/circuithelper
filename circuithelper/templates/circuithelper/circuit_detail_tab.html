@@ -32,9 +32,9 @@
             <div class="card-header">
                 <strong>Cost Information</strong>
                 {% if costs %}
-                    <a href="{% url 'plugins:netbox_circuit_manager:circuitcost_edit' pk=costs.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
+                    <a href="{% url 'plugins:circuithelper:circuitcost_edit' pk=costs.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
                 {% else %}
-                    <a href="{% url 'plugins:netbox_circuit_manager:circuitcost_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Costs</a>
+                    <a href="{% url 'plugins:circuithelper:circuitcost_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Costs</a>
                 {% endif %}
             </div>
             <div class="card-body">
@@ -73,7 +73,7 @@
         <div class="card mt-3">
             <div class="card-header">
                 <strong>Contracts</strong>
-                <a href="{% url 'plugins:netbox_circuit_manager:circuitcontract_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Contract</a>
+                <a href="{% url 'plugins:circuithelper:circuitcontract_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Contract</a>
             </div>
             <div class="card-body">
                 {% if contracts %}
@@ -91,13 +91,13 @@
                         <tbody>
                             {% for contract in contracts %}
                             <tr>
-                                <td><a href="{% url 'plugins:netbox_circuit_manager:circuitcontract' pk=contract.pk %}">{{ contract.contract_number }}</a></td>
+                                <td><a href="{% url 'plugins:circuithelper:circuitcontract' pk=contract.pk %}">{{ contract.contract_number }}</a></td>
                                 <td>{{ contract.start_date }}</td>
                                 <td>{{ contract.end_date|default:"—" }}</td>
                                 <td>{{ contract.term_months|default:"—" }} months</td>
                                 <td>{% if contract.auto_renew %}Yes{% else %}No{% endif %}</td>
                                 <td>
-                                    <a href="{% url 'plugins:netbox_circuit_manager:circuitcontract_edit' pk=contract.pk %}" class="btn btn-xs btn-warning">Edit</a>
+                                    <a href="{% url 'plugins:circuithelper:circuitcontract_edit' pk=contract.pk %}" class="btn btn-xs btn-warning">Edit</a>
                                     {% if contract.contract_file %}
                                         <a href="{{ contract.contract_file.url }}" class="btn btn-xs btn-info" target="_blank">View File</a>
                                     {% endif %}
@@ -118,7 +118,7 @@
         <div class="card mt-3">
             <div class="card-header">
                 <strong>Support Tickets</strong>
-                <a href="{% url 'plugins:netbox_circuit_manager:circuitticket_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Ticket</a>
+                <a href="{% url 'plugins:circuithelper:circuitticket_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Ticket</a>
             </div>
             <div class="card-body">
                 {% if tickets %}
@@ -136,13 +136,13 @@
                         <tbody>
                             {% for ticket in tickets %}
                             <tr>
-                                <td><a href="{% url 'plugins:netbox_circuit_manager:circuitticket' pk=ticket.pk %}">{{ ticket.ticket_number }}</a></td>
+                                <td><a href="{% url 'plugins:circuithelper:circuitticket' pk=ticket.pk %}">{{ ticket.ticket_number }}</a></td>
                                 <td>{{ ticket.subject }}</td>
                                 <td><span class="badge badge-{{ ticket.status }}">{{ ticket.get_status_display }}</span></td>
                                 <td><span class="badge badge-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span></td>
                                 <td>{{ ticket.opened_date|date:"Y-m-d H:i" }}</td>
                                 <td>
-                                    <a href="{% url 'plugins:netbox_circuit_manager:circuitticket_edit' pk=ticket.pk %}" class="btn btn-xs btn-warning">Edit</a>
+                                    <a href="{% url 'plugins:circuithelper:circuitticket_edit' pk=ticket.pk %}" class="btn btn-xs btn-warning">Edit</a>
                                     {% if ticket.external_url %}
                                         <a href="{{ ticket.external_url }}" class="btn btn-xs btn-info" target="_blank">External Link</a>
                                     {% endif %}
@@ -164,9 +164,9 @@
             <div class="card-header">
                 <strong>Circuit Path Map</strong>
                 {% if path %}
-                    <a href="{% url 'plugins:netbox_circuit_manager:circuitpath_edit' pk=path.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
+                    <a href="{% url 'plugins:circuithelper:circuitpath_edit' pk=path.pk %}" class="btn btn-sm btn-primary float-right">Edit</a>
                 {% else %}
-                    <a href="{% url 'plugins:netbox_circuit_manager:circuitpath_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Path</a>
+                    <a href="{% url 'plugins:circuithelper:circuitpath_add' %}?circuit={{ circuit.pk }}" class="btn btn-sm btn-success float-right">Add Path</a>
                 {% endif %}
             </div>
             <div class="card-body">

@@ -15,15 +15,15 @@
 
 ```bash
 cd /opt
-git clone https://github.com/yourusername/netbox-circuit-manager.git
-cd netbox-circuit-manager
+git clone https://github.com/yourusername/circuithelper.git
+cd circuithelper
 pip install -e .
 ```
 
 #### From PyPI (Production)
 
 ```bash
-pip install netbox-circuit-manager
+pip install circuithelper
 ```
 
 ### 2. Configure NetBox
@@ -33,12 +33,12 @@ Edit your NetBox `configuration.py` file (usually located at `/opt/netbox/netbox
 ```python
 # Enable the plugin
 PLUGINS = [
-    'netbox_circuit_manager',
+    'circuithelper',
 ]
 
 # Optional plugin configuration
 PLUGINS_CONFIG = {
-    'netbox_circuit_manager': {
+    'circuithelper': {
         # Default currency for cost tracking
         'default_currency': 'USD',
 
@@ -55,7 +55,7 @@ PLUGINS_CONFIG = {
 
 ```bash
 cd /opt/netbox/netbox
-python3 manage.py migrate netbox_circuit_manager
+python3 manage.py migrate circuithelper
 ```
 
 ### 4. Collect Static Files
@@ -133,7 +133,7 @@ sudo -u netbox crontab -e
 
 ### Plugin Not Appearing
 
-- Verify the plugin is installed: `pip list | grep netbox-circuit-manager`
+- Verify the plugin is installed: `pip list | grep circuithelper`
 - Check NetBox logs: `sudo journalctl -u netbox -f`
 - Ensure migrations ran successfully
 
@@ -155,8 +155,8 @@ sudo -u netbox crontab -e
 To upgrade to a newer version:
 
 ```bash
-pip install --upgrade netbox-circuit-manager
-python3 manage.py migrate netbox_circuit_manager
+pip install --upgrade circuithelper
+python3 manage.py migrate circuithelper
 python3 manage.py collectstatic --no-input
 sudo systemctl restart netbox netbox-rq
 ```
@@ -168,8 +168,8 @@ To remove the plugin:
 ```bash
 # Remove from configuration.py PLUGINS list
 # Then run:
-python3 manage.py migrate netbox_circuit_manager zero
-pip uninstall netbox-circuit-manager
+python3 manage.py migrate circuithelper zero
+pip uninstall circuithelper
 sudo systemctl restart netbox netbox-rq
 ```
 

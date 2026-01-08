@@ -8,8 +8,8 @@ from unittest.mock import Mock, patch
 from django.core.management import call_command
 from django.core.management.base import CommandError
 
-from netbox_circuit_manager.models import ProviderAPIConfig
-from netbox_circuit_manager.providers.registry import provider_registry
+from circuithelper.models import ProviderAPIConfig
+from circuithelper.providers.registry import provider_registry
 
 
 class MockProviderSync:

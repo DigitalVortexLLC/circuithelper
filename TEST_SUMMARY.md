@@ -205,13 +205,13 @@ Factory classes for easy test data creation:
 pytest
 
 # Run with coverage
-pytest --cov=netbox_circuit_manager --cov-report=html
+pytest --cov=circuithelper --cov-report=html
 
 # Run specific category
-pytest netbox_circuit_manager/tests/test_models.py
+pytest circuithelper/tests/test_models.py
 
 # Run specific test
-pytest netbox_circuit_manager/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
+pytest circuithelper/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
 ```
 
 ### Expected Results
@@ -221,12 +221,12 @@ pytest netbox_circuit_manager/tests/test_models.py::TestCircuitCost::test_create
 platform linux -- Python 3.12.0, pytest-7.4.0
 collected 120+ items
 
-netbox_circuit_manager/tests/test_models.py ................  [ 25%]
-netbox_circuit_manager/tests/test_api.py .............       [ 45%]
-netbox_circuit_manager/tests/test_forms.py ..........        [ 60%]
-netbox_circuit_manager/tests/test_utils.py .......           [ 72%]
-netbox_circuit_manager/tests/test_providers.py .........     [ 88%]
-netbox_circuit_manager/tests/test_management_commands.py ... [100%]
+circuithelper/tests/test_models.py ................  [ 25%]
+circuithelper/tests/test_api.py .............       [ 45%]
+circuithelper/tests/test_forms.py ..........        [ 60%]
+circuithelper/tests/test_utils.py .......           [ 72%]
+circuithelper/tests/test_providers.py .........     [ 88%]
+circuithelper/tests/test_management_commands.py ... [100%]
 
 ==================== 120+ passed in 15.23s =======================
 
@@ -278,7 +278,7 @@ Coverage: 84%
 
 ### Test Documentation Files
 
-1. **[tests/README.md](netbox_circuit_manager/tests/README.md)** - Test suite overview
+1. **[tests/README.md](circuithelper/tests/README.md)** - Test suite overview
 2. **[TESTING.md](TESTING.md)** - Comprehensive testing guide
 3. **[TEST_SUMMARY.md](TEST_SUMMARY.md)** - This file
 4. **[pytest.ini](pytest.ini)** - Pytest configuration

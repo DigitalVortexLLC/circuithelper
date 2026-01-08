@@ -2,7 +2,7 @@ from netbox.plugins import PluginConfig
 
 
 class CircuitManagerConfig(PluginConfig):
-    name = 'netbox_circuit_manager'
+    name = 'circuithelper'
     verbose_name = 'Circuit Manager'
     description = 'Advanced circuit management with cost tracking, contracts, and provider API integration'
     version = '0.1.0'

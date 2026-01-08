@@ -7,11 +7,11 @@ menu = PluginMenu(
             'Financial',
             (
                 PluginMenuItem(
-                    link='plugins:netbox_circuit_manager:circuitcost_list',
+                    link='plugins:circuithelper:circuitcost_list',
                     link_text='Circuit Costs',
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:netbox_circuit_manager:circuitcost_add',
+                            link='plugins:circuithelper:circuitcost_add',
                             title='Add',
                             icon_class='mdi mdi-plus-thick',
                         ),
@@ -23,22 +23,22 @@ menu = PluginMenu(
             'Contracts & Tickets',
             (
                 PluginMenuItem(
-                    link='plugins:netbox_circuit_manager:circuitcontract_list',
+                    link='plugins:circuithelper:circuitcontract_list',
                     link_text='Contracts',
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:netbox_circuit_manager:circuitcontract_add',
+                            link='plugins:circuithelper:circuitcontract_add',
                             title='Add',
                             icon_class='mdi mdi-plus-thick',
                         ),
                     ),
                 ),
                 PluginMenuItem(
-                    link='plugins:netbox_circuit_manager:circuitticket_list',
+                    link='plugins:circuithelper:circuitticket_list',
                     link_text='Tickets',
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:netbox_circuit_manager:circuitticket_add',
+                            link='plugins:circuithelper:circuitticket_add',
                             title='Add',
                             icon_class='mdi mdi-plus-thick',
                         ),
@@ -50,11 +50,11 @@ menu = PluginMenu(
             'Geographic',
             (
                 PluginMenuItem(
-                    link='plugins:netbox_circuit_manager:circuitpath_list',
+                    link='plugins:circuithelper:circuitpath_list',
                     link_text='Circuit Paths',
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:netbox_circuit_manager:circuitpath_add',
+                            link='plugins:circuithelper:circuitpath_add',
                             title='Add',
                             icon_class='mdi mdi-plus-thick',
                         ),
@@ -66,11 +66,11 @@ menu = PluginMenu(
             'Integration',
             (
                 PluginMenuItem(
-                    link='plugins:netbox_circuit_manager:providerapiconfig_list',
+                    link='plugins:circuithelper:providerapiconfig_list',
                     link_text='Provider API Configs',
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:netbox_circuit_manager:providerapiconfig_add',
+                            link='plugins:circuithelper:providerapiconfig_add',
                             title='Add',
                             icon_class='mdi mdi-plus-thick',
                         ),

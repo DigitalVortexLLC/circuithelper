@@ -31,10 +31,10 @@ pip install -e ".[dev]"
 pytest
 
 # Using Django's test runner
-python manage.py test netbox_circuit_manager
+python manage.py test circuithelper
 
 # With coverage
-pytest --cov=netbox_circuit_manager --cov-report=html
+pytest --cov=circuithelper --cov-report=html
 ```
 
 ## Test Structure
@@ -42,7 +42,7 @@ pytest --cov=netbox_circuit_manager --cov-report=html
 The test suite is organized into focused modules:
 
 ```
-netbox_circuit_manager/tests/
+circuithelper/tests/
 ├── conftest.py                      # Pytest configuration and fixtures
 ├── fixtures/
 │   ├── __init__.py
@@ -81,13 +81,13 @@ pytest
 pytest -v
 
 # Run specific test file
-pytest netbox_circuit_manager/tests/test_models.py
+pytest circuithelper/tests/test_models.py
 
 # Run specific test class
-pytest netbox_circuit_manager/tests/test_models.py::TestCircuitCost
+pytest circuithelper/tests/test_models.py::TestCircuitCost
 
 # Run specific test method
-pytest netbox_circuit_manager/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
+pytest circuithelper/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
 
 # Run tests matching pattern
 pytest -k "cost"
@@ -121,13 +121,13 @@ pytest -m "not slow"
 
 ```bash
 # Run all plugin tests
-python manage.py test netbox_circuit_manager
+python manage.py test circuithelper
 
 # Run specific test module
-python manage.py test netbox_circuit_manager.tests.test_models
+python manage.py test circuithelper.tests.test_models
 
 # Run with verbosity
-python manage.py test netbox_circuit_manager --verbosity=2
+python manage.py test circuithelper --verbosity=2
 ```
 
 ## Test Coverage
@@ -136,22 +136,22 @@ python manage.py test netbox_circuit_manager --verbosity=2
 
 ```bash
 # Run tests with coverage
-pytest --cov=netbox_circuit_manager
+pytest --cov=circuithelper
 
 # Generate HTML report
-pytest --cov=netbox_circuit_manager --cov-report=html
+pytest --cov=circuithelper --cov-report=html
 
 # View HTML report
 open htmlcov/index.html
 
 # Generate XML report (for CI)
-pytest --cov=netbox_circuit_manager --cov-report=xml
+pytest --cov=circuithelper --cov-report=xml
 
 # Terminal report with missing lines
-pytest --cov=netbox_circuit_manager --cov-report=term-missing
+pytest --cov=circuithelper --cov-report=term-missing
 
 # Fail if coverage below threshold
-pytest --cov=netbox_circuit_manager --cov-fail-under=80
+pytest --cov=circuithelper --cov-fail-under=80
 ```
 
 ### Coverage Goals
@@ -184,7 +184,7 @@ TOTAL                              84%
 
 ```python
 import pytest
-from netbox_circuit_manager.models import YourModel
+from circuithelper.models import YourModel
 
 
 @pytest.mark.django_db
@@ -219,7 +219,7 @@ class TestYourModel:
 @pytest.mark.django_db
 def test_with_fixtures(circuit, admin_user):
     """Test using pytest fixtures."""
-    from netbox_circuit_manager.models import CircuitCost
+    from circuithelper.models import CircuitCost
 
     cost = CircuitCost.objects.create(
         circuit=circuit,
@@ -232,7 +232,7 @@ def test_with_fixtures(circuit, admin_user):
 ### Using Factory Classes
 
 ```python
-from netbox_circuit_manager.tests.fixtures.factories import (
+from circuithelper.tests.fixtures.factories import (
     CircuitCostFactory,
     CircuitContractFactory
 )
@@ -308,7 +308,7 @@ def test_provider_sync(mock_get, provider):
     mock_get.return_value = mock_response
 
     # Test sync logic
-    from netbox_circuit_manager.providers.lumen import LumenProviderSync
+    from circuithelper.providers.lumen import LumenProviderSync
 
     config = ProviderAPIConfig.objects.create(
         provider=provider,
@@ -343,10 +343,10 @@ The project includes a GitHub Actions workflow (`.github/workflows/tests.yml`) t
 ./scripts/run_ci_tests.sh
 
 # Or manually:
-flake8 netbox_circuit_manager
-black --check netbox_circuit_manager
-pytest --cov=netbox_circuit_manager --cov-report=xml
-bandit -r netbox_circuit_manager
+flake8 circuithelper
+black --check circuithelper
+pytest --cov=circuithelper --cov-report=xml
+bandit -r circuithelper
 ```
 
 ### Pre-commit Hooks
@@ -399,7 +399,7 @@ DATABASES = {
 pip install -e .
 
 # Or add to PYTHONPATH
-export PYTHONPATH=/path/to/netbox_circuit_manager:$PYTHONPATH
+export PYTHONPATH=/path/to/circuithelper:$PYTHONPATH
 ```
 
 #### Fixture Not Found
@@ -423,7 +423,7 @@ pytest --pdb
 pytest -s
 
 # Run specific test with detailed output
-pytest -vvs netbox_circuit_manager/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
+pytest -vvs circuithelper/tests/test_models.py::TestCircuitCost::test_create_circuit_cost
 ```
 
 ### Performance

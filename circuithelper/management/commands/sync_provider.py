@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from netbox_circuit_manager.models import ProviderAPIConfig
-from netbox_circuit_manager.providers import provider_registry
+from circuithelper.models import ProviderAPIConfig
+from circuithelper.providers import provider_registry
 
 
 class Command(BaseCommand):

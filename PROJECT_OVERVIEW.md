@@ -61,7 +61,7 @@ A comprehensive NetBox plugin that extends the built-in circuit management funct
 ## Project Structure
 
 ```
-netbox_circuit_manager/
+circuithelper/
 ├── setup.py                          # Package setup and dependencies
 ├── requirements.txt                  # Python dependencies
 ├── MANIFEST.in                       # Package manifest
@@ -75,7 +75,7 @@ netbox_circuit_manager/
 ├── CONTRIBUTING.md                   # Contribution guidelines
 ├── PROJECT_OVERVIEW.md               # This file
 │
-└── netbox_circuit_manager/           # Main plugin package
+└── circuithelper/           # Main plugin package
     ├── __init__.py                   # Plugin configuration (PluginConfig)
     ├── models.py                     # Database models (5 models)
     ├── forms.py                      # Django forms
@@ -94,11 +94,11 @@ netbox_circuit_manager/
     │   └── __init__.py
     │
     ├── templates/                    # HTML templates
-    │   └── netbox_circuit_manager/
+    │   └── circuithelper/
     │       └── circuit_detail_tab.html
     │
     ├── static/                       # Static assets
-    │   └── netbox_circuit_manager/
+    │   └── circuithelper/
     │       ├── css/
     │       └── js/
     │
@@ -189,7 +189,7 @@ Centralized registry for provider implementations.
 
 **Usage:**
 ```python
-from netbox_circuit_manager.providers import provider_registry
+from circuithelper.providers import provider_registry
 
 # Register a provider
 provider_registry.register('mycarrier', MyCarrierProviderSync)

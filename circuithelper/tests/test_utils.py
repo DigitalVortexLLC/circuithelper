@@ -8,7 +8,7 @@ from io import BytesIO
 from zipfile import ZipFile
 from decimal import Decimal
 
-from netbox_circuit_manager.utils import (
+from circuithelper.utils import (
     parse_kmz_file,
     parse_kml_data,
     extract_coordinates,

@@ -8,10 +8,10 @@ from datetime import datetime
 from decimal import Decimal
 
 from circuits.models import Circuit
-from netbox_circuit_manager.models import ProviderAPIConfig, CircuitCost
-from netbox_circuit_manager.providers.base import BaseProviderSync
-from netbox_circuit_manager.providers.registry import ProviderRegistry
-from netbox_circuit_manager.providers.lumen import LumenProviderSync
+from circuithelper.models import ProviderAPIConfig, CircuitCost
+from circuithelper.providers.base import BaseProviderSync
+from circuithelper.providers.registry import ProviderRegistry
+from circuithelper.providers.lumen import LumenProviderSync
 
 
 class MockProviderSync(BaseProviderSync):

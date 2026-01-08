@@ -85,7 +85,7 @@ def analyze_test_file(filepath):
 
 def main():
     """Main function."""
-    test_dir = Path('netbox_circuit_manager/tests')
+    test_dir = Path('circuithelper/tests')
 
     print("🔬 Test Quality Analysis\n")
     print("=" * 70)
@@ -200,7 +200,7 @@ def main():
     print(f"\nTop Dependencies:")
     sorted_imports = sorted(all_imports.items(), key=lambda x: x[1], reverse=True)
     for imp, count in sorted_imports[:10]:
-        if not imp.startswith('netbox_circuit_manager'):
+        if not imp.startswith('circuithelper'):
             print(f"  • {imp} (used in {count} files)")
 
     print("\n" + "=" * 70)

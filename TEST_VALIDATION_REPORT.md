@@ -255,10 +255,10 @@ pip install -e ".[dev]"
 pytest
 
 # Run with coverage
-pytest --cov=netbox_circuit_manager --cov-report=html
+pytest --cov=circuithelper --cov-report=html
 
 # Run specific test file
-pytest netbox_circuit_manager/tests/test_models.py
+pytest circuithelper/tests/test_models.py
 
 # Run with verbose output
 pytest -v
@@ -269,12 +269,12 @@ pytest -v
 ======================== test session starts =========================
 collected 107 items
 
-netbox_circuit_manager/tests/test_api.py ................  [ 15%]
-netbox_circuit_manager/tests/test_forms.py ....................  [ 34%]
-netbox_circuit_manager/tests/test_management_commands.py .............  [ 46%]
-netbox_circuit_manager/tests/test_models.py .........................  [ 69%]
-netbox_circuit_manager/tests/test_providers.py ...................  [ 87%]
-netbox_circuit_manager/tests/test_utils.py ..............  [100%]
+circuithelper/tests/test_api.py ................  [ 15%]
+circuithelper/tests/test_forms.py ....................  [ 34%]
+circuithelper/tests/test_management_commands.py .............  [ 46%]
+circuithelper/tests/test_models.py .........................  [ 69%]
+circuithelper/tests/test_providers.py ...................  [ 87%]
+circuithelper/tests/test_utils.py ..............  [100%]
 
 ==================== 107 passed in ~15s =======================
 ```

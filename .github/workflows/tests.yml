@@ -72,8 +72,8 @@ jobs:
     - name: Run linting
       run: |
         pip install flake8 black
-        flake8 netbox_circuit_manager --count --select=E9,F63,F7,F82 --show-source --statistics
-        black --check netbox_circuit_manager
+        flake8 circuithelper --count --select=E9,F63,F7,F82 --show-source --statistics
+        black --check circuithelper
 
     - name: Run tests with coverage
       env:
@@ -85,7 +85,7 @@ jobs:
         REDIS_HOST: localhost
         REDIS_PORT: 6379
       run: |
-        pytest --cov=netbox_circuit_manager --cov-report=xml --cov-report=html --cov-report=term
+        pytest --cov=circuithelper --cov-report=xml --cov-report=html --cov-report=term
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
@@ -122,15 +122,15 @@ jobs:
 
     - name: Run flake8
       run: |
-        flake8 netbox_circuit_manager --count --statistics --max-line-length=100
+        flake8 circuithelper --count --statistics --max-line-length=100
 
     - name: Run black
       run: |
-        black --check --diff netbox_circuit_manager
+        black --check --diff circuithelper
 
     - name: Run isort
       run: |
-        isort --check-only --diff netbox_circuit_manager
+        isort --check-only --diff circuithelper
 
   security:
     runs-on: ubuntu-latest
@@ -154,7 +154,7 @@ jobs:
 
     - name: Run bandit security check
       run: |
-        bandit -r netbox_circuit_manager -f json -o bandit-report.json || true
+        bandit -r circuithelper -f json -o bandit-report.json || true
 
     - name: Upload security reports
       uses: actions/upload-artifact@v4

@@ -26,9 +26,9 @@ version: '3.4'
 services:
   netbox:
     volumes:
-      - /path/to/netbox-circuit-manager:/opt/netbox-circuit-manager:ro
+      - /path/to/circuithelper:/opt/circuithelper:ro
     environment:
-      PLUGINS: netbox_circuit_manager
+      PLUGINS: circuithelper
 EOF
 
 # Start NetBox
@@ -42,10 +42,10 @@ docker-compose up -d
 docker-compose exec netbox bash
 
 # Install plugin in editable mode
-pip install -e /opt/netbox-circuit-manager
+pip install -e /opt/circuithelper
 
 # Run migrations
-python manage.py migrate netbox_circuit_manager
+python manage.py migrate circuithelper
 
 # Create superuser
 python manage.py createsuperuser
@@ -66,8 +66,8 @@ We follow PEP 8 style guidelines. Use tools like `black` and `flake8`:
 
 ```bash
 pip install black flake8
-black netbox_circuit_manager/
-flake8 netbox_circuit_manager/
+black circuithelper/
+flake8 circuithelper/
 ```
 
 ### Database Migrations
@@ -75,8 +75,8 @@ flake8 netbox_circuit_manager/
 When you modify models, create migrations:
 
 ```bash
-python manage.py makemigrations netbox_circuit_manager
-python manage.py migrate netbox_circuit_manager
+python manage.py makemigrations circuithelper
+python manage.py migrate circuithelper
 ```
 
 ### Testing
@@ -85,10 +85,10 @@ Write tests for new features:
 
 ```bash
 # Run tests
-python manage.py test netbox_circuit_manager
+python manage.py test circuithelper
 
 # Run with coverage
-coverage run --source='netbox_circuit_manager' manage.py test netbox_circuit_manager
+coverage run --source='circuithelper' manage.py test circuithelper
 coverage report
 ```
 

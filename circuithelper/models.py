@@ -57,7 +57,7 @@ class CircuitCost(NetBoxModel):
         return f"{self.circuit} - MRC: {self.mrc} {self.currency}"
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_circuit_manager:circuitcost', args=[self.pk])
+        return reverse('plugins:circuithelper:circuitcost', args=[self.pk])
 
 
 class CircuitContract(NetBoxModel):
@@ -123,7 +123,7 @@ class CircuitContract(NetBoxModel):
         return f"{self.circuit} - {self.contract_number}"
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_circuit_manager:circuitcontract', args=[self.pk])
+        return reverse('plugins:circuithelper:circuitcontract', args=[self.pk])
 
 
 class CircuitTicket(NetBoxModel):
@@ -199,7 +199,7 @@ class CircuitTicket(NetBoxModel):
         return f"{self.ticket_number} - {self.circuit}"
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_circuit_manager:circuitticket', args=[self.pk])
+        return reverse('plugins:circuithelper:circuitticket', args=[self.pk])
 
 
 class CircuitPath(NetBoxModel):
@@ -261,7 +261,7 @@ class CircuitPath(NetBoxModel):
         return f"{self.circuit} - Path"
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_circuit_manager:circuitpath', args=[self.pk])
+        return reverse('plugins:circuithelper:circuitpath', args=[self.pk])
 
 
 class ProviderAPIConfig(NetBoxModel):
@@ -328,4 +328,4 @@ class ProviderAPIConfig(NetBoxModel):
         return f"{self.provider} - {self.provider_type}"
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_circuit_manager:providerapiconfig', args=[self.pk])
+        return reverse('plugins:circuithelper:providerapiconfig', args=[self.pk])

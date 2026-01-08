@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='netbox-circuit-manager',
+    name='circuithelper',
     version='0.1.0',
     description='Advanced circuit management plugin for NetBox',
     long_description=open('README.md').read(),
@@ -19,9 +19,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'netbox_circuit_manager': [
-            'templates/netbox_circuit_manager/**/*.html',
-            'static/netbox_circuit_manager/**/*',
+        'circuithelper': [
+            'templates/circuithelper/**/*.html',
+            'static/circuithelper/**/*',
         ],
     },
     zip_safe=False,

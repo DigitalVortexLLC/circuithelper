@@ -7,7 +7,7 @@ from decimal import Decimal
 from datetime import date
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from netbox_circuit_manager.forms import (
+from circuithelper.forms import (
     CircuitCostForm,
     CircuitContractForm,
     CircuitTicketForm,

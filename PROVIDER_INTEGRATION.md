@@ -22,7 +22,7 @@ BaseProviderSync (Abstract Base Class)
 Create a new Python file in the `providers/` directory:
 
 ```python
-# netbox_circuit_manager/providers/mycarrier.py
+# circuithelper/providers/mycarrier.py
 
 from typing import Dict, List
 from decimal import Decimal
@@ -133,7 +133,7 @@ provider_registry.register('mycarrier', MyCarrierProviderSync)
 
 ### Step 2: Register the Provider
 
-Add your provider to the `PROVIDER_CHOICES` in [models.py](netbox_circuit_manager/models.py:324):
+Add your provider to the `PROVIDER_CHOICES` in [models.py](circuithelper/models.py:324):
 
 ```python
 PROVIDER_CHOICES = (
@@ -340,8 +340,8 @@ Create tests in `tests/test_providers.py`:
 
 ```python
 from django.test import TestCase
-from netbox_circuit_manager.providers.mycarrier import MyCarrierProviderSync
-from netbox_circuit_manager.models import ProviderAPIConfig
+from circuithelper.providers.mycarrier import MyCarrierProviderSync
+from circuithelper.models import ProviderAPIConfig
 
 
 class MyCarrierProviderSyncTest(TestCase):
