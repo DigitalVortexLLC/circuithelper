@@ -1,12 +1,11 @@
 from netbox.api.viewsets import NetBoxModelViewSet
-from ..models import (
-    CircuitCost, CircuitContract, CircuitTicket,
-    CircuitPath, ProviderAPIConfig
-)
+from ..models import CircuitCost, CircuitContract, CircuitTicket, CircuitPath, ProviderAPIConfig
 from .serializers import (
-    CircuitCostSerializer, CircuitContractSerializer,
-    CircuitTicketSerializer, CircuitPathSerializer,
-    ProviderAPIConfigSerializer
+    CircuitCostSerializer,
+    CircuitContractSerializer,
+    CircuitTicketSerializer,
+    CircuitPathSerializer,
+    ProviderAPIConfigSerializer,
 )
 
 

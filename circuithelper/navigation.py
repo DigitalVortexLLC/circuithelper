@@ -1,83 +1,83 @@
 from netbox.plugins import PluginMenuButton, PluginMenuItem, PluginMenu
 
 menu = PluginMenu(
-    label='Circuit Manager',
+    label="Circuit Manager",
     groups=(
         (
-            'Financial',
+            "Financial",
             (
                 PluginMenuItem(
-                    link='plugins:circuithelper:circuitcost_list',
-                    link_text='Circuit Costs',
+                    link="plugins:circuithelper:circuitcost_list",
+                    link_text="Circuit Costs",
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:circuithelper:circuitcost_add',
-                            title='Add',
-                            icon_class='mdi mdi-plus-thick',
+                            link="plugins:circuithelper:circuitcost_add",
+                            title="Add",
+                            icon_class="mdi mdi-plus-thick",
                         ),
                     ),
                 ),
-            )
+            ),
         ),
         (
-            'Contracts & Tickets',
+            "Contracts & Tickets",
             (
                 PluginMenuItem(
-                    link='plugins:circuithelper:circuitcontract_list',
-                    link_text='Contracts',
+                    link="plugins:circuithelper:circuitcontract_list",
+                    link_text="Contracts",
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:circuithelper:circuitcontract_add',
-                            title='Add',
-                            icon_class='mdi mdi-plus-thick',
+                            link="plugins:circuithelper:circuitcontract_add",
+                            title="Add",
+                            icon_class="mdi mdi-plus-thick",
                         ),
                     ),
                 ),
                 PluginMenuItem(
-                    link='plugins:circuithelper:circuitticket_list',
-                    link_text='Tickets',
+                    link="plugins:circuithelper:circuitticket_list",
+                    link_text="Tickets",
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:circuithelper:circuitticket_add',
-                            title='Add',
-                            icon_class='mdi mdi-plus-thick',
+                            link="plugins:circuithelper:circuitticket_add",
+                            title="Add",
+                            icon_class="mdi mdi-plus-thick",
                         ),
                     ),
                 ),
-            )
+            ),
         ),
         (
-            'Geographic',
+            "Geographic",
             (
                 PluginMenuItem(
-                    link='plugins:circuithelper:circuitpath_list',
-                    link_text='Circuit Paths',
+                    link="plugins:circuithelper:circuitpath_list",
+                    link_text="Circuit Paths",
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:circuithelper:circuitpath_add',
-                            title='Add',
-                            icon_class='mdi mdi-plus-thick',
+                            link="plugins:circuithelper:circuitpath_add",
+                            title="Add",
+                            icon_class="mdi mdi-plus-thick",
                         ),
                     ),
                 ),
-            )
+            ),
         ),
         (
-            'Integration',
+            "Integration",
             (
                 PluginMenuItem(
-                    link='plugins:circuithelper:providerapiconfig_list',
-                    link_text='Provider API Configs',
+                    link="plugins:circuithelper:providerapiconfig_list",
+                    link_text="Provider API Configs",
                     buttons=(
                         PluginMenuButton(
-                            link='plugins:circuithelper:providerapiconfig_add',
-                            title='Add',
-                            icon_class='mdi mdi-plus-thick',
+                            link="plugins:circuithelper:providerapiconfig_add",
+                            title="Add",
+                            icon_class="mdi mdi-plus-thick",
                         ),
                     ),
                 ),
-            )
+            ),
         ),
     ),
-    icon_class='mdi mdi-transit-connection-variant',
+    icon_class="mdi mdi-transit-connection-variant",
 )

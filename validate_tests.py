@@ -12,7 +12,7 @@ from pathlib import Path
 def validate_python_file(filepath):
     """Validate Python file syntax."""
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             content = f.read()
         ast.parse(content)
         return True, None
@@ -23,7 +23,7 @@ def validate_python_file(filepath):
 def count_test_methods(filepath):
     """Count test methods in a test file."""
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             content = f.read()
         tree = ast.parse(content)
 
@@ -32,10 +32,10 @@ def count_test_methods(filepath):
 
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
-                if node.name.startswith('Test'):
+                if node.name.startswith("Test"):
                     class_count += 1
             elif isinstance(node, ast.FunctionDef):
-                if node.name.startswith('test_'):
+                if node.name.startswith("test_"):
                     test_count += 1
 
         return test_count, class_count
@@ -45,7 +45,7 @@ def count_test_methods(filepath):
 
 def main():
     """Main validation function."""
-    test_dir = Path('circuithelper/tests')
+    test_dir = Path("circuithelper/tests")
 
     if not test_dir.exists():
         print(f"❌ Test directory not found: {test_dir}")
@@ -55,8 +55,8 @@ def main():
     print("=" * 60)
 
     # Find all test files
-    test_files = list(test_dir.glob('test_*.py'))
-    test_files.append(test_dir / 'conftest.py')
+    test_files = list(test_dir.glob("test_*.py"))
+    test_files.append(test_dir / "conftest.py")
 
     total_tests = 0
     total_classes = 0
@@ -89,7 +89,7 @@ def main():
         total_files += 1
 
     # Check factory file
-    factory_file = test_dir / 'fixtures' / 'factories.py'
+    factory_file = test_dir / "fixtures" / "factories.py"
     if factory_file.exists():
         print(f"\n📄 {factory_file.relative_to(test_dir.parent)}")
         valid, error = validate_python_file(factory_file)
@@ -127,13 +127,13 @@ def main():
     # Check for required test files
     print("\n📋 Required Test Files:")
     required_files = [
-        'test_models.py',
-        'test_api.py',
-        'test_forms.py',
-        'test_utils.py',
-        'test_providers.py',
-        'test_management_commands.py',
-        'conftest.py'
+        "test_models.py",
+        "test_api.py",
+        "test_forms.py",
+        "test_utils.py",
+        "test_providers.py",
+        "test_management_commands.py",
+        "conftest.py",
     ]
 
     for required in required_files:
@@ -147,5 +147,5 @@ def main():
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

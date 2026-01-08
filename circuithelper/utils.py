@@ -24,7 +24,7 @@ def parse_kmz_file(kmz_file) -> Tuple[Optional[Dict], Optional[Tuple[float, floa
             # Find the KML file inside
             kml_file = None
             for name in kmz.namelist():
-                if name.endswith('.kml'):
+                if name.endswith(".kml"):
                     kml_file = name
                     break
 
@@ -63,10 +63,7 @@ def parse_kml_data(kml_data: bytes) -> Tuple[Optional[Dict], Optional[Tuple[floa
             features_from_document(feature, features, all_coords)
 
         # Create GeoJSON FeatureCollection
-        geojson = {
-            'type': 'FeatureCollection',
-            'features': features
-        }
+        geojson = {"type": "FeatureCollection", "features": features}
 
         # Calculate center point
         center = None
@@ -86,26 +83,26 @@ def features_from_document(document, features_list, coords_list):
     """
     Recursively extract features from KML document/folder structure.
     """
-    if hasattr(document, 'features'):
+    if hasattr(document, "features"):
         for feature in document.features():
-            if hasattr(feature, 'geometry') and feature.geometry:
+            if hasattr(feature, "geometry") and feature.geometry:
                 # Convert to GeoJSON feature
                 geom = shape(feature.geometry)
                 coords = extract_coordinates(geom)
                 coords_list.extend(coords)
 
                 feature_dict = {
-                    'type': 'Feature',
-                    'geometry': mapping(geom),
-                    'properties': {
-                        'name': getattr(feature, 'name', ''),
-                        'description': getattr(feature, 'description', ''),
-                    }
+                    "type": "Feature",
+                    "geometry": mapping(geom),
+                    "properties": {
+                        "name": getattr(feature, "name", ""),
+                        "description": getattr(feature, "description", ""),
+                    },
                 }
                 features_list.append(feature_dict)
 
             # Recursively process folders
-            if hasattr(feature, 'features'):
+            if hasattr(feature, "features"):
                 features_from_document(feature, features_list, coords_list)
 
 
@@ -116,13 +113,13 @@ def extract_coordinates(geometry):
     coords = []
     geom_type = geometry.geom_type
 
-    if geom_type == 'Point':
+    if geom_type == "Point":
         coords.append((geometry.x, geometry.y))
-    elif geom_type in ['LineString', 'LinearRing']:
+    elif geom_type in ["LineString", "LinearRing"]:
         coords.extend(geometry.coords)
-    elif geom_type == 'Polygon':
+    elif geom_type == "Polygon":
         coords.extend(geometry.exterior.coords)
-    elif geom_type.startswith('Multi') or geom_type == 'GeometryCollection':
+    elif geom_type.startswith("Multi") or geom_type == "GeometryCollection":
         for geom in geometry.geoms:
             coords.extend(extract_coordinates(geom))
 
@@ -146,16 +143,16 @@ def calculate_path_distance(geojson_data: Dict) -> Optional[float]:
         total_distance = 0
 
         # Set up projection to calculate distance in meters
-        wgs84 = pyproj.CRS('EPSG:4326')
-        utm = pyproj.CRS('EPSG:3857')  # Web Mercator
+        wgs84 = pyproj.CRS("EPSG:4326")
+        utm = pyproj.CRS("EPSG:3857")  # Web Mercator
 
         # Create transformer for pyproj 2.x+
         transformer = pyproj.Transformer.from_crs(wgs84, utm, always_xy=True)
 
-        for feature in geojson_data.get('features', []):
-            geom = shape(feature['geometry'])
+        for feature in geojson_data.get("features", []):
+            geom = shape(feature["geometry"])
 
-            if geom.geom_type in ['LineString', 'MultiLineString']:
+            if geom.geom_type in ["LineString", "MultiLineString"]:
                 # Transform to projected coordinate system
                 projected_geom = transform(transformer.transform, geom)
                 total_distance += projected_geom.length
@@ -168,7 +165,9 @@ def calculate_path_distance(geojson_data: Dict) -> Optional[float]:
         return None
 
 
-def generate_folium_map(geojson_data: Dict, center_coords: Tuple[float, float], zoom: int = 10) -> str:
+def generate_folium_map(
+    geojson_data: Dict, center_coords: Tuple[float, float], zoom: int = 10
+) -> str:
     """
     Generate HTML for an interactive Folium map.
 
@@ -184,30 +183,17 @@ def generate_folium_map(geojson_data: Dict, center_coords: Tuple[float, float], 
         import folium
 
         # Create map centered on coordinates
-        m = folium.Map(
-            location=center_coords,
-            zoom_start=zoom,
-            tiles='OpenStreetMap'
-        )
+        m = folium.Map(location=center_coords, zoom_start=zoom, tiles="OpenStreetMap")
 
         # Add GeoJSON layer
         folium.GeoJson(
             geojson_data,
-            name='Circuit Path',
-            style_function=lambda x: {
-                'color': '#3388ff',
-                'weight': 3,
-                'opacity': 0.8
-            },
-            highlight_function=lambda x: {
-                'weight': 5,
-                'opacity': 1.0
-            },
+            name="Circuit Path",
+            style_function=lambda x: {"color": "#3388ff", "weight": 3, "opacity": 0.8},
+            highlight_function=lambda x: {"weight": 5, "opacity": 1.0},
             tooltip=folium.GeoJsonTooltip(
-                fields=['name', 'description'],
-                aliases=['Name:', 'Description:'],
-                localize=True
-            )
+                fields=["name", "description"], aliases=["Name:", "Description:"], localize=True
+            ),
         ).add_to(m)
 
         # Add layer control

@@ -1,13 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from netbox.views import generic
 from circuits.models import Circuit
-from .models import (
-    CircuitCost, CircuitContract, CircuitTicket,
-    CircuitPath, ProviderAPIConfig
-)
+from .models import CircuitCost, CircuitContract, CircuitTicket, CircuitPath, ProviderAPIConfig
 from .forms import (
-    CircuitCostForm, CircuitContractForm, CircuitTicketForm,
-    CircuitPathForm, ProviderAPIConfigForm
+    CircuitCostForm,
+    CircuitContractForm,
+    CircuitTicketForm,
+    CircuitPathForm,
+    ProviderAPIConfigForm,
 )
 from .utils import parse_kmz_file, calculate_path_distance, generate_folium_map
 
@@ -88,13 +88,11 @@ class CircuitPathView(generic.ObjectView):
         # Generate interactive map if geojson data exists
         if instance.geojson_data and instance.map_center_lat and instance.map_center_lon:
             center = (float(instance.map_center_lat), float(instance.map_center_lon))
-            context['map_html'] = generate_folium_map(
-                instance.geojson_data,
-                center,
-                instance.map_zoom
+            context["map_html"] = generate_folium_map(
+                instance.geojson_data, center, instance.map_zoom
             )
         else:
-            context['map_html'] = None
+            context["map_html"] = None
 
         return context
 
@@ -109,8 +107,8 @@ class CircuitPathEditView(generic.ObjectEditView):
 
         if form.is_valid():
             # Process KMZ file if uploaded
-            if 'kmz_file' in request.FILES:
-                kmz_file = request.FILES['kmz_file']
+            if "kmz_file" in request.FILES:
+                kmz_file = request.FILES["kmz_file"]
                 geojson_data, center_coords = parse_kmz_file(kmz_file)
 
                 if geojson_data and center_coords:
@@ -179,12 +177,12 @@ def circuit_detail_tab(request, pk):
         map_html = None
 
     context = {
-        'circuit': circuit,
-        'costs': costs,
-        'contracts': contracts,
-        'tickets': tickets,
-        'path': path,
-        'map_html': map_html,
+        "circuit": circuit,
+        "costs": costs,
+        "contracts": contracts,
+        "tickets": tickets,
+        "path": path,
+        "map_html": map_html,
     }
 
-    return render(request, 'circuithelper/circuit_detail_tab.html', context)
+    return render(request, "circuithelper/circuit_detail_tab.html", context)

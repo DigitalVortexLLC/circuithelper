@@ -35,10 +35,12 @@ class BaseProviderSync(ABC):
         Override this method to customize session setup.
         """
         if self.api_key:
-            self.session.headers.update({
-                'Authorization': f'Bearer {self.api_key}',
-                'Content-Type': 'application/json',
-            })
+            self.session.headers.update(
+                {
+                    "Authorization": f"Bearer {self.api_key}",
+                    "Content-Type": "application/json",
+                }
+            )
 
     @abstractmethod
     def authenticate(self) -> bool:
@@ -128,22 +130,17 @@ class BaseProviderSync(ABC):
                 'errors': List[str]
             }
         """
-        stats = {
-            'total': 0,
-            'success': 0,
-            'failed': 0,
-            'errors': []
-        }
+        stats = {"total": 0, "success": 0, "failed": 0, "errors": []}
 
         try:
             # Authenticate
             if not self.authenticate():
-                stats['errors'].append('Authentication failed')
+                stats["errors"].append("Authentication failed")
                 return stats
 
             # Get circuits from provider
             circuits_data = self.get_circuits()
-            stats['total'] = len(circuits_data)
+            stats["total"] = len(circuits_data)
 
             # Sync each circuit
             for circuit_data in circuits_data:
@@ -151,14 +148,14 @@ class BaseProviderSync(ABC):
                     # Find matching NetBox circuit
                     circuit = self._match_circuit(circuit_data)
                     if not circuit:
-                        stats['failed'] += 1
-                        stats['errors'].append(
+                        stats["failed"] += 1
+                        stats["errors"].append(
                             f"Circuit not found: {circuit_data.get('id', 'unknown')}"
                         )
                         continue
 
                     # Get detailed circuit information
-                    details = self.get_circuit_details(circuit_data['id'])
+                    details = self.get_circuit_details(circuit_data["id"])
 
                     # Sync costs
                     self.sync_circuit_costs(circuit, details)
@@ -169,11 +166,11 @@ class BaseProviderSync(ABC):
                     # Sync path (optional)
                     self.sync_circuit_path(circuit, details)
 
-                    stats['success'] += 1
+                    stats["success"] += 1
 
                 except Exception as e:
-                    stats['failed'] += 1
-                    stats['errors'].append(f"Error syncing circuit: {str(e)}")
+                    stats["failed"] += 1
+                    stats["errors"].append(f"Error syncing circuit: {str(e)}")
 
             # Update last sync timestamp
             self.config.last_sync = datetime.now()
@@ -181,7 +178,7 @@ class BaseProviderSync(ABC):
             self.config.save()
 
         except Exception as e:
-            stats['errors'].append(f"Sync failed: {str(e)}")
+            stats["errors"].append(f"Sync failed: {str(e)}")
             self.config.sync_status = f"Failed: {str(e)}"
             self.config.save()
 
@@ -199,7 +196,7 @@ class BaseProviderSync(ABC):
             Matching Circuit instance or None
         """
         # Default: match by circuit ID (cid)
-        provider_cid = provider_data.get('cid') or provider_data.get('circuit_id')
+        provider_cid = provider_data.get("cid") or provider_data.get("circuit_id")
         if provider_cid:
             try:
                 return Circuit.objects.get(cid=provider_cid)
@@ -226,19 +223,11 @@ class BaseProviderSync(ABC):
             if self.authenticate():
                 elapsed = (datetime.now() - start_time).total_seconds()
                 return {
-                    'success': True,
-                    'message': 'Connection successful',
-                    'response_time': elapsed
+                    "success": True,
+                    "message": "Connection successful",
+                    "response_time": elapsed,
                 }
             else:
-                return {
-                    'success': False,
-                    'message': 'Authentication failed',
-                    'response_time': 0
-                }
+                return {"success": False, "message": "Authentication failed", "response_time": 0}
         except Exception as e:
-            return {
-                'success': False,
-                'message': f'Connection error: {str(e)}',
-                'response_time': 0
-            }
+            return {"success": False, "message": f"Connection error: {str(e)}", "response_time": 0}

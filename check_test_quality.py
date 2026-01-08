@@ -23,13 +23,13 @@ class TestQualityChecker(ast.NodeVisitor):
 
     def visit_ClassDef(self, node):
         """Visit class definitions."""
-        if node.name.startswith('Test'):
+        if node.name.startswith("Test"):
             self.test_classes.append(node.name)
         self.generic_visit(node)
 
     def visit_FunctionDef(self, node):
         """Visit function definitions."""
-        if node.name.startswith('test_'):
+        if node.name.startswith("test_"):
             self.test_methods.append(node.name)
 
             # Check for docstring
@@ -45,7 +45,7 @@ class TestQualityChecker(ast.NodeVisitor):
 
             # Check for fixtures in arguments
             for arg in node.args.args:
-                if arg.arg not in ['self', 'cls']:
+                if arg.arg not in ["self", "cls"]:
                     self.fixtures_used.add(arg.arg)
 
         self.generic_visit(node)
@@ -63,7 +63,7 @@ class TestQualityChecker(ast.NodeVisitor):
 
 def analyze_test_file(filepath):
     """Analyze a test file for quality metrics."""
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         content = f.read()
 
     tree = ast.parse(content)
@@ -71,35 +71,35 @@ def analyze_test_file(filepath):
     checker.visit(tree)
 
     return {
-        'test_methods': len(checker.test_methods),
-        'test_classes': len(checker.test_classes),
-        'has_docstrings': checker.has_docstrings,
-        'missing_docstrings': checker.missing_docstrings,
-        'assertions': checker.assertions,
-        'fixtures_used': checker.fixtures_used,
-        'imports': checker.imports,
-        'method_names': checker.test_methods,
-        'class_names': checker.test_classes
+        "test_methods": len(checker.test_methods),
+        "test_classes": len(checker.test_classes),
+        "has_docstrings": checker.has_docstrings,
+        "missing_docstrings": checker.missing_docstrings,
+        "assertions": checker.assertions,
+        "fixtures_used": checker.fixtures_used,
+        "imports": checker.imports,
+        "method_names": checker.test_methods,
+        "class_names": checker.test_classes,
     }
 
 
 def main():
     """Main function."""
-    test_dir = Path('circuithelper/tests')
+    test_dir = Path("circuithelper/tests")
 
     print("🔬 Test Quality Analysis\n")
     print("=" * 70)
 
-    test_files = sorted(test_dir.glob('test_*.py'))
+    test_files = sorted(test_dir.glob("test_*.py"))
 
     total_stats = {
-        'files': 0,
-        'methods': 0,
-        'classes': 0,
-        'with_docstrings': 0,
-        'without_docstrings': 0,
-        'assertions': 0,
-        'fixtures': set()
+        "files": 0,
+        "methods": 0,
+        "classes": 0,
+        "with_docstrings": 0,
+        "without_docstrings": 0,
+        "assertions": 0,
+        "fixtures": set(),
     }
 
     all_imports = defaultdict(int)
@@ -116,9 +116,9 @@ def main():
         print(f"  Without Docstrings: {stats['missing_docstrings']}")
         print(f"  Total Assertions: {stats['assertions']}")
 
-        if stats['test_methods'] > 0:
-            docstring_pct = (stats['has_docstrings'] / stats['test_methods']) * 100
-            assertions_per_test = stats['assertions'] / stats['test_methods']
+        if stats["test_methods"] > 0:
+            docstring_pct = (stats["has_docstrings"] / stats["test_methods"]) * 100
+            assertions_per_test = stats["assertions"] / stats["test_methods"]
 
             print(f"  Docstring Coverage: {docstring_pct:.1f}%")
             print(f"  Assertions/Test: {assertions_per_test:.1f}")
@@ -135,19 +135,19 @@ def main():
             else:
                 print(f"  ✅ Quality: Good")
 
-        if stats['fixtures_used']:
+        if stats["fixtures_used"]:
             print(f"  Fixtures: {', '.join(sorted(stats['fixtures_used']))}")
 
         # Update totals
-        total_stats['files'] += 1
-        total_stats['methods'] += stats['test_methods']
-        total_stats['classes'] += stats['test_classes']
-        total_stats['with_docstrings'] += stats['has_docstrings']
-        total_stats['without_docstrings'] += stats['missing_docstrings']
-        total_stats['assertions'] += stats['assertions']
-        total_stats['fixtures'].update(stats['fixtures_used'])
+        total_stats["files"] += 1
+        total_stats["methods"] += stats["test_methods"]
+        total_stats["classes"] += stats["test_classes"]
+        total_stats["with_docstrings"] += stats["has_docstrings"]
+        total_stats["without_docstrings"] += stats["missing_docstrings"]
+        total_stats["assertions"] += stats["assertions"]
+        total_stats["fixtures"].update(stats["fixtures_used"])
 
-        for imp in stats['imports']:
+        for imp in stats["imports"]:
             all_imports[imp] += 1
 
     # Summary
@@ -159,9 +159,9 @@ def main():
     print(f"Total Test Methods: {total_stats['methods']}")
     print(f"Total Assertions: {total_stats['assertions']}")
 
-    if total_stats['methods'] > 0:
-        overall_docstring_pct = (total_stats['with_docstrings'] / total_stats['methods']) * 100
-        overall_assertions = total_stats['assertions'] / total_stats['methods']
+    if total_stats["methods"] > 0:
+        overall_docstring_pct = (total_stats["with_docstrings"] / total_stats["methods"]) * 100
+        overall_assertions = total_stats["assertions"] / total_stats["methods"]
 
         print(f"\nQuality Metrics:")
         print(f"  Docstring Coverage: {overall_docstring_pct:.1f}%")
@@ -181,7 +181,7 @@ def main():
         else:
             quality_checks.append("❌ Low assertion coverage")
 
-        if total_stats['methods'] >= 100:
+        if total_stats["methods"] >= 100:
             quality_checks.append("✅ Comprehensive test count")
         else:
             quality_checks.append("⚠️  Could use more tests")
@@ -191,21 +191,21 @@ def main():
             print(f"  {check}")
 
     # Fixtures
-    if total_stats['fixtures']:
+    if total_stats["fixtures"]:
         print(f"\nFixtures Used ({len(total_stats['fixtures'])}):")
-        for fixture in sorted(total_stats['fixtures']):
+        for fixture in sorted(total_stats["fixtures"]):
             print(f"  • {fixture}")
 
     # Most common imports
     print(f"\nTop Dependencies:")
     sorted_imports = sorted(all_imports.items(), key=lambda x: x[1], reverse=True)
     for imp, count in sorted_imports[:10]:
-        if not imp.startswith('circuithelper'):
+        if not imp.startswith("circuithelper"):
             print(f"  • {imp} (used in {count} files)")
 
     print("\n" + "=" * 70)
     print("\n✅ Test quality analysis complete!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

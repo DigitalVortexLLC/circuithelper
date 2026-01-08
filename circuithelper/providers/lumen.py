@@ -18,7 +18,7 @@ class LumenProviderSync(BaseProviderSync):
     Lumen API integration for circuit synchronization.
     """
 
-    provider_name = 'lumen'
+    provider_name = "lumen"
 
     def authenticate(self) -> bool:
         """
@@ -27,18 +27,13 @@ class LumenProviderSync(BaseProviderSync):
         try:
             # Example authentication - adjust for actual Lumen API
             response = self.session.post(
-                f'{self.api_endpoint}/auth/token',
-                json={
-                    'api_key': self.api_key,
-                    'api_secret': self.api_secret
-                }
+                f"{self.api_endpoint}/auth/token",
+                json={"api_key": self.api_key, "api_secret": self.api_secret},
             )
 
             if response.status_code == 200:
-                token = response.json().get('access_token')
-                self.session.headers.update({
-                    'Authorization': f'Bearer {token}'
-                })
+                token = response.json().get("access_token")
+                self.session.headers.update({"Authorization": f"Bearer {token}"})
                 return True
 
             return False
@@ -52,9 +47,9 @@ class LumenProviderSync(BaseProviderSync):
         Retrieve list of circuits from Lumen API.
         """
         try:
-            response = self.session.get(f'{self.api_endpoint}/circuits')
+            response = self.session.get(f"{self.api_endpoint}/circuits")
             response.raise_for_status()
-            return response.json().get('circuits', [])
+            return response.json().get("circuits", [])
 
         except Exception as e:
             print(f"Error fetching circuits: {e}")
@@ -65,9 +60,7 @@ class LumenProviderSync(BaseProviderSync):
         Get detailed information for a specific circuit.
         """
         try:
-            response = self.session.get(
-                f'{self.api_endpoint}/circuits/{circuit_id}'
-            )
+            response = self.session.get(f"{self.api_endpoint}/circuits/{circuit_id}")
             response.raise_for_status()
             return response.json()
 
@@ -81,23 +74,23 @@ class LumenProviderSync(BaseProviderSync):
         """
         try:
             # Extract cost data from provider response
-            billing = provider_data.get('billing', {})
+            billing = provider_data.get("billing", {})
 
-            nrc = billing.get('non_recurring_charge')
-            mrc = billing.get('monthly_recurring_charge')
-            currency = billing.get('currency', 'USD')
-            account = billing.get('account_number', '')
+            nrc = billing.get("non_recurring_charge")
+            mrc = billing.get("monthly_recurring_charge")
+            currency = billing.get("currency", "USD")
+            account = billing.get("account_number", "")
 
             # Update or create CircuitCost
             cost, created = CircuitCost.objects.update_or_create(
                 circuit=circuit,
                 defaults={
-                    'nrc': Decimal(str(nrc)) if nrc else None,
-                    'mrc': Decimal(str(mrc)) if mrc else None,
-                    'currency': currency,
-                    'billing_account': account,
-                    'last_updated_date': datetime.now().date(),
-                }
+                    "nrc": Decimal(str(nrc)) if nrc else None,
+                    "mrc": Decimal(str(mrc)) if mrc else None,
+                    "currency": currency,
+                    "billing_account": account,
+                    "last_updated_date": datetime.now().date(),
+                },
             )
 
             return True
@@ -114,20 +107,20 @@ class LumenProviderSync(BaseProviderSync):
             from ..models import CircuitTicket
 
             # Get open tickets for this circuit
-            tickets = provider_data.get('tickets', [])
+            tickets = provider_data.get("tickets", [])
 
             for ticket_data in tickets:
                 # Update or create ticket
                 ticket, created = CircuitTicket.objects.update_or_create(
-                    ticket_number=ticket_data.get('ticket_number'),
+                    ticket_number=ticket_data.get("ticket_number"),
                     defaults={
-                        'circuit': circuit,
-                        'subject': ticket_data.get('subject', ''),
-                        'status': self._map_ticket_status(ticket_data.get('status')),
-                        'priority': self._map_ticket_priority(ticket_data.get('priority')),
-                        'description': ticket_data.get('description', ''),
-                        'external_url': ticket_data.get('url', ''),
-                    }
+                        "circuit": circuit,
+                        "subject": ticket_data.get("subject", ""),
+                        "status": self._map_ticket_status(ticket_data.get("status")),
+                        "priority": self._map_ticket_priority(ticket_data.get("priority")),
+                        "description": ticket_data.get("description", ""),
+                        "external_url": ticket_data.get("url", ""),
+                    },
                 )
 
             return True
@@ -141,27 +134,27 @@ class LumenProviderSync(BaseProviderSync):
         Map provider ticket status to NetBox ticket status.
         """
         status_map = {
-            'new': 'open',
-            'open': 'open',
-            'working': 'in_progress',
-            'pending_customer': 'pending',
-            'resolved': 'resolved',
-            'closed': 'closed',
+            "new": "open",
+            "open": "open",
+            "working": "in_progress",
+            "pending_customer": "pending",
+            "resolved": "resolved",
+            "closed": "closed",
         }
-        return status_map.get(provider_status.lower(), 'open')
+        return status_map.get(provider_status.lower(), "open")
 
     def _map_ticket_priority(self, provider_priority: str) -> str:
         """
         Map provider ticket priority to NetBox ticket priority.
         """
         priority_map = {
-            'p1': 'critical',
-            'p2': 'high',
-            'p3': 'medium',
-            'p4': 'low',
+            "p1": "critical",
+            "p2": "high",
+            "p3": "medium",
+            "p4": "low",
         }
-        return priority_map.get(provider_priority.lower(), 'medium')
+        return priority_map.get(provider_priority.lower(), "medium")
 
 
 # Register the Lumen provider
-provider_registry.register('lumen', LumenProviderSync)
+provider_registry.register("lumen", LumenProviderSync)

@@ -10,7 +10,7 @@ from circuithelper.utils import (
     parse_kml_data,
     extract_coordinates,
     calculate_path_distance,
-    generate_folium_map
+    generate_folium_map,
 )
 
 
@@ -35,7 +35,7 @@ class TestKMZParsing:
     </Placemark>
   </Document>
 </kml>"""
-        return kml.encode('utf-8')
+        return kml.encode("utf-8")
 
     def create_test_kmz(self):
         """Create a test KMZ file in memory."""
@@ -43,8 +43,8 @@ class TestKMZParsing:
 
         # Create KMZ (zipped KML)
         kmz_buffer = BytesIO()
-        with ZipFile(kmz_buffer, 'w') as kmz:
-            kmz.writestr('doc.kml', kml_data)
+        with ZipFile(kmz_buffer, "w") as kmz:
+            kmz.writestr("doc.kml", kml_data)
 
         kmz_buffer.seek(0)
         return kmz_buffer
@@ -55,8 +55,8 @@ class TestKMZParsing:
         geojson, center = parse_kml_data(kml_data)
 
         assert geojson is not None
-        assert geojson['type'] == 'FeatureCollection'
-        assert 'features' in geojson
+        assert geojson["type"] == "FeatureCollection"
+        assert "features" in geojson
         assert center is not None
         assert len(center) == 2  # (lat, lon)
 
@@ -66,7 +66,7 @@ class TestKMZParsing:
         geojson, center = parse_kmz_file(kmz_file)
 
         assert geojson is not None
-        assert geojson['type'] == 'FeatureCollection'
+        assert geojson["type"] == "FeatureCollection"
         assert center is not None
 
     def test_parse_invalid_kmz(self):
@@ -80,8 +80,8 @@ class TestKMZParsing:
     def test_parse_kmz_without_kml(self):
         """Test parsing KMZ without KML file inside."""
         kmz_buffer = BytesIO()
-        with ZipFile(kmz_buffer, 'w') as kmz:
-            kmz.writestr('other_file.txt', b'Not a KML file')
+        with ZipFile(kmz_buffer, "w") as kmz:
+            kmz.writestr("other_file.txt", b"Not a KML file")
 
         kmz_buffer.seek(0)
         geojson, center = parse_kmz_file(kmz_buffer)
@@ -127,10 +127,7 @@ class TestCoordinateExtraction:
         """Test extracting coordinates from a MultiLineString."""
         from shapely.geometry import MultiLineString
 
-        multiline = MultiLineString([
-            [(0, 0), (1, 1)],
-            [(2, 2), (3, 3)]
-        ])
+        multiline = MultiLineString([[(0, 0), (1, 1)], [(2, 2), (3, 3)]])
         coords = extract_coordinates(multiline)
 
         assert len(coords) == 4
@@ -142,17 +139,16 @@ class TestPathDistanceCalculation:
     def test_calculate_linestring_distance(self):
         """Test calculating distance for a LineString."""
         geojson = {
-            'type': 'FeatureCollection',
-            'features': [{
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': [
-                        [-122.4194, 37.7749],
-                        [-122.4084, 37.7849]
-                    ]
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [[-122.4194, 37.7749], [-122.4084, 37.7849]],
+                    },
                 }
-            }]
+            ],
         }
 
         distance = calculate_path_distance(geojson)
@@ -164,10 +160,7 @@ class TestPathDistanceCalculation:
 
     def test_calculate_empty_geojson_distance(self):
         """Test calculating distance for empty GeoJSON."""
-        geojson = {
-            'type': 'FeatureCollection',
-            'features': []
-        }
+        geojson = {"type": "FeatureCollection", "features": []}
 
         distance = calculate_path_distance(geojson)
 
@@ -177,14 +170,13 @@ class TestPathDistanceCalculation:
     def test_calculate_point_distance(self):
         """Test that point geometry returns 0 distance."""
         geojson = {
-            'type': 'FeatureCollection',
-            'features': [{
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': [-122.4194, 37.7749]
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {"type": "Point", "coordinates": [-122.4194, 37.7749]},
                 }
-            }]
+            ],
         }
 
         distance = calculate_path_distance(geojson)
@@ -199,20 +191,17 @@ class TestMapGeneration:
     def test_generate_folium_map(self):
         """Test generating a Folium map."""
         geojson = {
-            'type': 'FeatureCollection',
-            'features': [{
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': [
-                        [-122.4194, 37.7749],
-                        [-122.4084, 37.7849]
-                    ]
-                },
-                'properties': {
-                    'name': 'Test Path'
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [[-122.4194, 37.7749], [-122.4084, 37.7849]],
+                    },
+                    "properties": {"name": "Test Path"},
                 }
-            }]
+            ],
         }
 
         center = (37.7749, -122.4194)
@@ -224,11 +213,11 @@ class TestMapGeneration:
         assert isinstance(html, str)
         assert len(html) > 0
         # Check for common Folium HTML markers
-        assert 'leaflet' in html.lower() or 'map' in html.lower()
+        assert "leaflet" in html.lower() or "map" in html.lower()
 
     def test_generate_map_with_invalid_data(self):
         """Test generating map with invalid data."""
-        geojson = {'invalid': 'data'}
+        geojson = {"invalid": "data"}
         center = (0, 0)
         zoom = 10
 
@@ -241,25 +230,25 @@ class TestMapGeneration:
     def test_generate_map_with_multiple_features(self):
         """Test generating map with multiple features."""
         geojson = {
-            'type': 'FeatureCollection',
-            'features': [
+            "type": "FeatureCollection",
+            "features": [
                 {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': [[-122.4194, 37.7749], [-122.4084, 37.7849]]
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [[-122.4194, 37.7749], [-122.4084, 37.7849]],
                     },
-                    'properties': {'name': 'Path 1'}
+                    "properties": {"name": "Path 1"},
                 },
                 {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': [[-122.4084, 37.7849], [-122.3984, 37.7949]]
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [[-122.4084, 37.7849], [-122.3984, 37.7949]],
                     },
-                    'properties': {'name': 'Path 2'}
-                }
-            ]
+                    "properties": {"name": "Path 2"},
+                },
+            ],
         }
 
         center = (37.7849, -122.4084)

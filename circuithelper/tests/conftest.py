@@ -15,9 +15,7 @@ User = get_user_model()
 def test_user(db):
     """Create a test user."""
     return User.objects.create_user(
-        username='testuser',
-        password='testpass123',
-        email='test@example.com'
+        username="testuser", password="testpass123", email="test@example.com"
     )
 
 
@@ -25,54 +23,41 @@ def test_user(db):
 def admin_user(db):
     """Create an admin user."""
     return User.objects.create_superuser(
-        username='admin',
-        password='admin123',
-        email='admin@example.com'
+        username="admin", password="admin123", email="admin@example.com"
     )
 
 
 @pytest.fixture
 def provider(db):
     """Create a test provider."""
-    return Provider.objects.create(
-        name='Test Provider',
-        slug='test-provider'
-    )
+    return Provider.objects.create(name="Test Provider", slug="test-provider")
 
 
 @pytest.fixture
 def circuit_type(db):
     """Create a test circuit type."""
-    return CircuitType.objects.create(
-        name='Internet',
-        slug='internet'
-    )
+    return CircuitType.objects.create(name="Internet", slug="internet")
 
 
 @pytest.fixture
 def circuit(db, provider, circuit_type):
     """Create a test circuit."""
     return Circuit.objects.create(
-        cid='TEST-CIRCUIT-001',
-        provider=provider,
-        type=circuit_type,
-        status='active'
+        cid="TEST-CIRCUIT-001", provider=provider, type=circuit_type, status="active"
     )
 
 
 @pytest.fixture
 def tenant(db):
     """Create a test tenant."""
-    return Tenant.objects.create(
-        name='Test Tenant',
-        slug='test-tenant'
-    )
+    return Tenant.objects.create(name="Test Tenant", slug="test-tenant")
 
 
 @pytest.fixture
 def api_client():
     """Create an API client for testing."""
     from rest_framework.test import APIClient
+
     return APIClient()
 
 
